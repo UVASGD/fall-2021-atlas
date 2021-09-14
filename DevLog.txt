@@ -1,0 +1,15 @@
+----Key----
+{} = Prefab Type
+[] = Code Block
+// = Script Name
+
+TODO:
+-Add {Enemies}
+	*Add /Enemy AI/ lmao
+-Alter [Jumping] to have a faster fall with variable jump heights
+-Figure out what to do with lightning
+-Start working on {Hitboxes} and [Attacks] for {Player}
+
+
+BUGS:
+-NONE YET! :)
