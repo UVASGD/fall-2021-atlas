@@ -36,30 +36,35 @@ public class AppManager : MonoBehaviour
 
     void FixedUpdate()
     {
-        Vector2 toGo = transform.position;
-        if(Mathf.Abs(toGo.x - follow.position.x) > xRange)
+        if (follow != null)
         {
-            if (toGo.x > follow.position.x)
-                toGo.x = follow.position.x + xRange;
-            else
-                toGo.x = follow.position.x - xRange;
+            // Camera follow updates
+            Vector2 toGo = transform.position;
+            if (Mathf.Abs(toGo.x - follow.position.x) > xRange)
+            {
+                if (toGo.x > follow.position.x)
+                    toGo.x = follow.position.x + xRange;
+                else
+                    toGo.x = follow.position.x - xRange;
+            }
+
+            if (Mathf.Abs(toGo.y - follow.position.y) > yRange)
+            {
+                if (toGo.y > follow.position.y)
+                    toGo.y = follow.position.y + yRange;
+                else
+                    toGo.y = follow.position.y - yRange;
+            }
+
+            float x = Mathf.SmoothDamp(transform.position.x, toGo.x, ref velocity.x, speed);
+            float y = Mathf.SmoothDamp(transform.position.y, toGo.y, ref velocity.y, speed);
+
+            x = Mathf.Clamp(x, xLimMin, xLimMax);
+            y = Mathf.Clamp(y, yLimMin, yLimMax);
+            transform.position = new Vector3(x, y, transform.position.z);
         }
-
-        if (Mathf.Abs(toGo.y - follow.position.y) > yRange)
-        {
-            if (toGo.y > follow.position.y)
-                toGo.y = follow.position.y + yRange;
-            else
-                toGo.y = follow.position.y - yRange;
-        }
-
-        float x = Mathf.SmoothDamp(transform.position.x, toGo.x, ref velocity.x, speed);
-        float y = Mathf.SmoothDamp(transform.position.y, toGo.y, ref velocity.y, speed);
-
-        x = Mathf.Clamp(x, xLimMin, xLimMax);
-        y = Mathf.Clamp(y, yLimMin, yLimMax);
-        transform.position = new Vector3(x, y, transform.position.z);
         
+
         if (shifting)
         {
             shift += Time.deltaTime;
@@ -95,9 +100,12 @@ public class AppManager : MonoBehaviour
     // Sets Player's bounds
     void setBounds()
     {
-        follow.gameObject.SendMessage("setMinLimit", xLimMin - 8.5F);
-        follow.gameObject.SendMessage("setMaxLimit", xLimMax + 8.5F);
-        follow.gameObject.SendMessage("setMinHeight", yLimMin - 5.5F);
+        if (follow != null)
+        {
+            follow.gameObject.SendMessage("setMinLimit", xLimMin - 8.5F);
+            follow.gameObject.SendMessage("setMaxLimit", xLimMax + 8.5F);
+            follow.gameObject.SendMessage("setMinHeight", yLimMin - 5.5F);
+        }
     }
 
     // Changes Scenes
