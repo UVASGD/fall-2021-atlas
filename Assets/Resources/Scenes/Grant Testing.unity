@@ -330,6 +330,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   pathIndicator: {fileID: 7161117637647109050, guid: 39338e239faddc44ca7c9a30c2c6c319, type: 3}
   pathSizeFrames: 150
+  travelBackSpeedFrames: 5
 --- !u!4 &1078885427 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 8720391782479377086, guid: 8f37f83c1fae2b7469d4d22b58181f13, type: 3}
@@ -653,6 +654,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2586555719944602420, guid: c67a4eb43e6457e48a5c14558022aa27, type: 3}
+      propertyPath: orthographic size
+      value: 5
+      objectReference: {fileID: 0}
     - target: {fileID: 2586555719944602423, guid: c67a4eb43e6457e48a5c14558022aa27, type: 3}
       propertyPath: m_Name
       value: Main Camera
