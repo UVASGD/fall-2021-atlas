@@ -2,9 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnemyAI : MonoBehaviour
+public class EnemyAI : MonoBehaviour, IDamageable
 {
-
+    public int maxHealth = 100;
+    int currentHealth;
     public bool facingRight;
     public float sightRange;
     public float sightWidth;
@@ -17,6 +18,7 @@ public class EnemyAI : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        currentHealth = maxHealth;
         rb = GetComponent<Rigidbody2D>();
         cl = GetComponent<BoxCollider2D>();
     }
@@ -85,5 +87,28 @@ public class EnemyAI : MonoBehaviour
         }
         
         return found;
+    }
+
+    public void TakeDamage(int damage)
+    {
+        currentHealth -= damage;
+
+        //TODO: play hurt animation
+
+        if(currentHealth <= 0)
+        {
+            Die();
+        }
+    }
+
+    void Die()
+    {
+        //TODO: play death animation
+
+        Debug.Log("Enemy died (rip)");
+
+        //Disable the enemy bc it's dead
+        // (we can change this to add corpse mechanics, work with rewind mechanic, etc)
+        gameObject.SetActive(false);
     }
 }
