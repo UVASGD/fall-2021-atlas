@@ -19,7 +19,7 @@ public class Movement : MonoBehaviour
     public float maxJump;
     public bool facingRight;
     public static bool canMove;
-
+   
     private Vector3 respawnPos;
     private const int walkAccel = 100;
     private const int dashLength = 10;
@@ -166,6 +166,7 @@ public class Movement : MonoBehaviour
         transform.position = new Vector3(Mathf.Clamp(transform.position.x, xRangeMin, xRangeMax), transform.position.y, transform.position.z);
         if (transform.position.y < minHeight)
             Die();
+   
     }
 
     // Bounds setting
@@ -232,4 +233,5 @@ public class Movement : MonoBehaviour
         Debug.DrawRay(cl.bounds.center, Vector2.left * (cl.bounds.extents.x + 0.3F), draw);
         return checker.collider != null;
     }
+       
 }
