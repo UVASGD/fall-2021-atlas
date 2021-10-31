@@ -6,26 +6,27 @@ using UnityEngine.UI;
 public class healthBar : MonoBehaviour
 {
     public Slider slider;
-    public int maxHealth = 100;
-    public int currentHealth;
+    //public int maxHealth = 100;
+    //public int currentHealth;
 
 
 
 
     void Start()
     {
-        currentHealth = maxHealth;
-        setMaxHealth(maxHealth);
+        //currentHealth = maxHealth;
+        setMaxHealth(playerCombat.instance.health);
     }
 
     void Update()
     {
         //health bar test
         //use "[" to manually lower health
-        if (Input.GetKeyDown(KeyCode.LeftBracket))
+        /*if (Input.GetKeyDown(KeyCode.LeftBracket))
         {
             TakeDamage(20);
-        }
+        }*/
+        setHealth(playerCombat.instance.health);
     }
 
 
@@ -43,11 +44,13 @@ public class healthBar : MonoBehaviour
     }
 
     //health bar test
+    /*
     void TakeDamage(int damage)
     {
         currentHealth -= damage;
         setHealth(currentHealth);
     }
+    */
 
 
 }
