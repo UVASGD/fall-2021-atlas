@@ -4,14 +4,14 @@ using UnityEngine;
 
 public class playerCombat : MonoBehaviour
 {
-    public Transform attackPoint;
     public float attackRange = 0.5f;
-    public LayerMask enemyLayers;
     public int attackDamage = 50;
     public float attackRate = 2f;
+    public float attackRadius = 2f;
+    public GameObject attackObject;
     float nextAttackTime = 0f;
-    public slashGraphic slash;     //note: may delete this depending on how the attack animation works
     private Movement playerMovement;
+    
     // Start is called before the first frame update
     void Start()
     {
@@ -37,35 +37,20 @@ public class playerCombat : MonoBehaviour
 
         // temp attack animation: just show a slash lol
         // this can be deleted later if we want to, just a temp thing to show a slash while attacking
-        slash.Attack(playerMovement.facingRight);
+        float rotation = playerMovement.directionFacing* Mathf.Deg2Rad;
+        Vector3 instantiatePosition = attackRadius * new Vector3(Mathf.Cos(rotation), Mathf.Sin(rotation), 0) + Vector3.back;
+        Quaternion instantiateRotation = Quaternion.Euler(0, 0, playerMovement.directionFacing);
+        GameObject slash = Instantiate(attackObject, transform.position + instantiatePosition, instantiateRotation, transform);
+        //TODO if the attack animation is directional, account for whether the player is flipped.   
+        // slash.GetComponent<SpriteRenderer>().flipX = playerMovement.lookingRight;
 
-        Collider2D[] hitEnemies;
 
-        // Detect enemies in range of attack
-        if (playerMovement.facingRight)
-        {
-            hitEnemies = Physics2D.OverlapCircleAll(attackPoint.position, attackRange, enemyLayers);
-        }
-        else
-        {
-            hitEnemies = Physics2D.OverlapCircleAll(new Vector2(attackPoint.position.x - 2 * transform.localScale.x * attackPoint.localPosition.x, attackPoint.position.y), attackRange, enemyLayers);
-        }
 
-        // Damage them
-        foreach(Collider2D enemy in hitEnemies)
-        {
-            enemy.GetComponent<IDamageable>().TakeDamage(attackDamage);
-        }
+
+
+
     }
 
-    void OnDrawGizmosSelected()
-    {
-        if(attackPoint == null)
-        {
-            return;
-        }
-        Gizmos.DrawWireSphere(attackPoint.position, attackRange);
-        Gizmos.DrawWireSphere(new Vector2(attackPoint.position.x -2*transform.localScale.x * attackPoint.localPosition.x, attackPoint.position.y), attackRange);
-    }
+  
 }
 
