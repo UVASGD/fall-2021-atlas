@@ -30,8 +30,11 @@ public class goombaEnemy : MonoBehaviour, IDamageable
     void FixedUpdate()
     {
         rb.velocity = new Vector2(speed, rb.velocity.y);    //set velocity
-        colliding = Physics2D.Linecast(transform.position, new Vector2(transform.position.x + sightDistanceToWall, transform.position.y),LayerMask.GetMask("Wall")); //check if hit a wall
-        if (colliding)  //turn around if you hit a wall
+        colliding = Physics2D.Linecast(transform.position, new Vector2(transform.position.x + sightDistanceToWall, transform.position.y), LayerMask.GetMask("Wall"));
+        if (Physics2D.Linecast(transform.position, new Vector2(transform.position.x + sightDistanceToWall, transform.position.y), LayerMask.GetMask("Default"))) {
+            print("hello");
+        } //check if hit a wall
+        if (colliding)  // turn around if you hit a wall or player
         {
             speed = -1f * speed;
             sightDistanceToWall = -1f * sightDistanceToWall;

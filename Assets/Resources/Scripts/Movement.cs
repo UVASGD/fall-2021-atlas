@@ -101,7 +101,7 @@ public class Movement : MonoBehaviour
                 startJump = Time.time;
                 jumping = true;
             }
-            else if (jumping && (jumpButton || (startJump + maxJump < Time.time)))
+            else if (jumping && (Input.GetKeyUp(JUMP_BUTTON_CODE) || (startJump + maxJump < Time.time)))
             {
                 jumping = false;
                 rb.velocity = new Vector2(rb.velocity.x, rb.velocity.y / 1.75F);

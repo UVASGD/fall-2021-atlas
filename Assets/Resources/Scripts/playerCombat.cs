@@ -7,7 +7,6 @@ public class playerCombat : MonoBehaviour
 {
     public int maxHealth = 100;
     public int health;
-    public Transform attackPoint;
     public float attackRange = 0.5f;
     public int attackDamage = 50;
     public float attackRate = 2f;
@@ -15,7 +14,7 @@ public class playerCombat : MonoBehaviour
     public GameObject attackObject;
     float nextAttackTime = 0f;
     private Movement playerMovement;
-    public float hitForce = 2f;     //force that's applied to the player when hit by an attack (knockback)
+    private float hitForce = 20f;     //force that's applied to the player when hit by an attack (knockback)
     public int iFrames = 20;  //number of invincibility frames after getting hit by an attack
     private int currentIFrames = 0;
 
@@ -100,9 +99,8 @@ public class playerCombat : MonoBehaviour
         Vector2 myPos = new Vector2(transform.position.x, transform.position.y);
         Vector2 sourcePos = new Vector2(source.x, source.y);
         Vector3 dir = (sourcePos - myPos).normalized;
-
         dir = dir * -1 * hitForce;
-        gameObject.GetComponent<Rigidbody2D>().AddForce(dir,ForceMode2D.Impulse);
+        gameObject.GetComponent<Rigidbody2D>().AddForce(dir, ForceMode2D.Impulse);
     }
 
     public void Die()
