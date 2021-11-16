@@ -33,7 +33,7 @@ Transform:
   m_GameObject: {fileID: 3153496238293602229}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: -1, z: 0}
-  m_LocalScale: {x: 2, y: 4, z: 1}
+  m_LocalScale: {x: 4, y: 8, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -148,15 +148,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d8590ff7de9e2f743bc0176c219ebde3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  UP_BUTTON_CODE: 119
+  DOWN_BUTTON_CODE: 115
+  LEFT_BUTTON_CODE: 97
+  RIGHT_BUTTON_CODE: 100
+  JUMP_BUTTON_CODE: 119
   maxWalkSpeed: 10
   maxFallSpeed: 25
   jumpBurst: 900
   maxJump: 0.2
   directionFacing: 0
+  lookingRight: 1
   walls:
     serializedVersion: 2
     m_Bits: 64
-  lookingRight: 1
 --- !u!114 &-4792658507800525579
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -184,11 +189,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 97d13f317afb05146be6607bb0340cb8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  maxHealth: 100
+  health: 0
+  attackPoint: {fileID: 0}
   attackRange: 0.85
   attackDamage: 50
   attackRate: 2
   attackRadius: 2
-  attackObject: {fileID: 0}
+  attackObject: {fileID: 8241851824818242529, guid: 73f442af7bdd5ff4ca6abd9de30326fa, type: 3}
+  hitForce: 2
+  iFrames: 20
 --- !u!114 &-4680133206348845871
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -202,8 +212,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   slider: {fileID: 2007603726217466392, guid: b352eb054bdb2cc48a0d541f7b04303f, type: 3}
-  maxHealth: 100
-  currentHealth: 0
 --- !u!114 &-624445681260028960
 MonoBehaviour:
   m_ObjectHideFlags: 0

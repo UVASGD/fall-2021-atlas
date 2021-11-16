@@ -328,14 +328,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 97d13f317afb05146be6607bb0340cb8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  attackPoint: {fileID: 0}
+  maxHealth: 100
+  health: 0
+  attackPoint: {fileID: 7233551516678119027, guid: 73f442af7bdd5ff4ca6abd9de30326fa, type: 3}
   attackRange: 0.85
-  enemyLayers:
-    serializedVersion: 2
-    m_Bits: 65536
   attackDamage: 50
   attackRate: 4
-  slash: {fileID: 0}
+  attackRadius: 2
+  attackObject: {fileID: 8241851824818242529, guid: 73f442af7bdd5ff4ca6abd9de30326fa, type: 3}
+  hitForce: 2
+  iFrames: 20
 --- !u!4 &1078885427 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 8720391782479377086, guid: 8f37f83c1fae2b7469d4d22b58181f13, type: 3}
@@ -444,7 +446,7 @@ Transform:
   - {fileID: 1563911517}
   - {fileID: 505220522}
   m_Father: {fileID: 0}
-  m_RootOrder: 2
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1445090171
 PrefabInstance:
@@ -860,7 +862,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 6289672742967290522, guid: c09ea3061e9631445a3d0192de60581f, type: 3}
       propertyPath: m_RootOrder
-      value: 3
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 6289672742967290522, guid: c09ea3061e9631445a3d0192de60581f, type: 3}
       propertyPath: m_LocalPosition.x
