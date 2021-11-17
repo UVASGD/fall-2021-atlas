@@ -28,7 +28,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5309377838223996647}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 32.42, y: 2.71, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 90, y: 150, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -146,4 +146,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   player: {fileID: 0}
   textbox: {fileID: 0}
-  text: {fileID: 0}
+  DialogueLine: 0
