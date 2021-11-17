@@ -74,6 +74,8 @@ public class Movement : MonoBehaviour
                     rb.AddForce(Vector2.left * walkAccel);
                 else if (!onWallL())
                     rb.AddForce(Vector2.left * walkAccel / 1.25F);
+                if(facingRight)
+                    transform.localScale = new Vector3(-1, transform.localScale.y, transform.localScale.z);
                 facingRight = false;
                 //anim.SetBool("walking", true);
                 //transform.localScale = new Vector3(-1, transform.localScale.y, transform.localScale.z);
@@ -84,6 +86,8 @@ public class Movement : MonoBehaviour
                     rb.AddForce(Vector2.right * walkAccel);
                 else if (!onWallR())
                     rb.AddForce(Vector2.right * walkAccel / 1.25F);
+                if(!facingRight)
+                    transform.localScale = new Vector3(1, transform.localScale.y, transform.localScale.z);
                 facingRight = true;
                 //anim.SetBool("walking", true);
                 //transform.localScale = new Vector3(1, transform.localScale.y, transform.localScale.z);
