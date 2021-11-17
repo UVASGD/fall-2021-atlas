@@ -34,9 +34,8 @@ Transform:
   m_GameObject: {fileID: 3153496238293602229}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: -1, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children:
-  - {fileID: 6574838651737328471}
+  m_LocalScale: {x: 4, y: 8, z: 1}
+  m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -78,14 +77,14 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 1.8, y: 3.1}
-    newSize: {x: 1.5333333, y: 3}
+    oldSize: {x: 0.24, y: 0.25}
+    newSize: {x: 0.01, y: 0.01}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 1.2692342, y: 3.021128}
+  m_Size: {x: 0.24, y: 0.25}
   m_EdgeRadius: 0
 --- !u!212 &3153496238293602228
 SpriteRenderer:
@@ -127,8 +126,8 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 4832644886028264000, guid: 9468d18b8963bfe4299f7462b5b2e31a, type: 3}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Sprite: {fileID: 21300000, guid: 230f9a3279d79a54abc5949240bd2799, type: 3}
+  m_Color: {r: 0, g: 0.11333633, b: 0.6886792, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -150,11 +149,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d8590ff7de9e2f743bc0176c219ebde3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  UP_BUTTON_CODE: 119
+  DOWN_BUTTON_CODE: 115
+  LEFT_BUTTON_CODE: 97
+  RIGHT_BUTTON_CODE: 100
+  JUMP_BUTTON_CODE: 119
   maxWalkSpeed: 10
   maxFallSpeed: 25
   jumpBurst: 900
   maxJump: 0.2
-  facingRight: 1
+  directionFacing: 0
+  lookingRight: 1
   walls:
     serializedVersion: 2
     m_Bits: 64
@@ -185,14 +190,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 97d13f317afb05146be6607bb0340cb8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  attackPoint: {fileID: 6574838651737328471}
+  maxHealth: 100
+  health: 0
+  attackPoint: {fileID: 0}
   attackRange: 0.85
-  enemyLayers:
-    serializedVersion: 2
-    m_Bits: 65536
   attackDamage: 50
   attackRate: 2
-  slash: {fileID: 8465312042546107266}
+  attackRadius: 2
+  attackObject: {fileID: 8241851824818242529, guid: 73f442af7bdd5ff4ca6abd9de30326fa, type: 3}
+  hitForce: 2
+  iFrames: 20
 --- !u!114 &-4680133206348845871
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -206,8 +213,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   slider: {fileID: 2007603726217466392, guid: b352eb054bdb2cc48a0d541f7b04303f, type: 3}
-  maxHealth: 100
-  currentHealth: 0
 --- !u!114 &-624445681260028960
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -5,27 +5,20 @@ using UnityEngine;
 public class slashGraphic : MonoBehaviour
 {
     SpriteRenderer slashSprite;
+    PolygonCollider2D collider;
     public int slashFrames = 5;
     int currentFrames = 0;
     public playerCombat player;
-    
-    public void Attack(bool facingRight)
+
+    public void Attack(float direction, bool facingRight)
     {
-        if (facingRight)
-        {
-            slashSprite.flipX = false;
-            transform.localPosition = new Vector2(0, 0);
-        }
-        else
-        {
-            slashSprite.flipX = true;
-            transform.localPosition = new Vector2(- 2 * player.attackPoint.localPosition.x, 0);
-        }
-        slashSprite.enabled = true;
+        slashSprite.flipX = !facingRight;
+        
     }
 
     void Start()
     {
+        collider = GetComponent<PolygonCollider2D>();
         slashSprite = GetComponent<SpriteRenderer>();
     }
 
@@ -35,13 +28,16 @@ public class slashGraphic : MonoBehaviour
         {
             if(currentFrames > slashFrames)
             {
-                slashSprite.enabled = false;
-                currentFrames = 0;
+                Destroy(this.gameObject);
             }
             else
             {
                 currentFrames++;
             }
         }
+    }
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        collision.gameObject.SendMessage("TakeDamage", 30);
     }
 }

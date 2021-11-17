@@ -11,13 +11,17 @@ public class Movement : MonoBehaviour
      * It a lot, but it works.
      * Therefore, unless we make design decisions that nullify the decisions I've made, I recommend not bothering with this file...
      */
-    
-    
+
+
+
+    public KeyCode UP_BUTTON_CODE = KeyCode.W, DOWN_BUTTON_CODE = KeyCode.S, LEFT_BUTTON_CODE = KeyCode.A, RIGHT_BUTTON_CODE = KeyCode.D, JUMP_BUTTON_CODE = KeyCode.W;
+
     public int maxWalkSpeed;
     public int maxFallSpeed;
     public float jumpBurst;
     public float maxJump;
-    public bool facingRight;
+    public float directionFacing; //degree measure for the direction you're facing. Up = 90 degrees, positive = counterclockwise
+    public bool lookingRight = true;
     public static bool canMove;
    
     private Vector3 respawnPos;
@@ -34,10 +38,12 @@ public class Movement : MonoBehaviour
     private float xRangeMax;
     private float minHeight;
     [SerializeField] private LayerMask walls;
+    SpriteRenderer spriteRenderer;
 
     // Start is called before the first frame update
     void Start()
     {
+        spriteRenderer = GetComponent<SpriteRenderer>();
         respawnPos = new Vector3(transform.position.x, transform.position.y, transform.position.z);
         rb = GetComponent<Rigidbody2D>();
         cl = GetComponent<BoxCollider2D>();
@@ -47,50 +53,78 @@ public class Movement : MonoBehaviour
         Camera.main.GetComponent<AppManager>().follow = transform;
         Camera.main.SendMessage("setBounds");
     }
-
+   
     // Update is called once per frame
     void Update()
     {
+        bool upButton = Input.GetKey(UP_BUTTON_CODE), 
+            downButton = Input.GetKey(DOWN_BUTTON_CODE), 
+            leftButton = Input.GetKey(LEFT_BUTTON_CODE), 
+            rightButton = Input.GetKey(RIGHT_BUTTON_CODE),
+            jumpButton = Input.GetKey(JUMP_BUTTON_CODE);
+
+        bool leftButtonPressed = Input.GetKeyDown(LEFT_BUTTON_CODE),
+            rightButtonPressed = Input.GetKeyDown(RIGHT_BUTTON_CODE);
+
+        if (rightButtonPressed)
+        {
+            lookingRight = true;
+        }
+        else if (leftButtonPressed)
+        {
+            lookingRight = false;
+        }
+        spriteRenderer.flipX = !lookingRight;
+
+        //TODO allow player to change which direction they are facing even when not able to move. Consider changing.
+        if (upButton)
+        {
+            directionFacing = 90; // if up button is pressed, always face up.
+        }
+        else if (downButton)
+        {
+            directionFacing = -90;
+        }
+        else //decide whether we're facing right or left
+        {
+            directionFacing = lookingRight ? 0 : 180; //face in the direction of the last left/right buttom press. 
+        }
+
+
         if (canMove)
         {
             // Jump Code
-            if (Input.GetKeyDown(KeyCode.W) && !jumping && onGround())
+            if (jumpButton && !jumping && onGround())
             {
                 rb.velocity = new Vector2(rb.velocity.x, 0);
                 rb.AddForce(Vector2.up * jumpBurst);
                 startJump = Time.time;
                 jumping = true;
             }
-            else if (jumping && (Input.GetKeyUp(KeyCode.W) || (startJump + maxJump < Time.time)))
+            else if (jumping && (Input.GetKeyUp(JUMP_BUTTON_CODE) || (startJump + maxJump < Time.time)))
             {
                 jumping = false;
                 rb.velocity = new Vector2(rb.velocity.x, rb.velocity.y / 1.75F);
             }
 
-            // Walk Code
-            if (Input.GetKey(KeyCode.A))
+
+            if (leftButton && rightButton)
             {
-                if (onGround())
-                    rb.AddForce(Vector2.left * walkAccel);
-                else if (!onWallL())
-                    rb.AddForce(Vector2.left * walkAccel / 1.25F);
-                if(facingRight)
-                    transform.localScale = new Vector3(-1, transform.localScale.y, transform.localScale.z);
-                facingRight = false;
-                //anim.SetBool("walking", true);
-                //transform.localScale = new Vector3(-1, transform.localScale.y, transform.localScale.z);
+                if (lookingRight)// move in the direction that was pressed first, not the one pressed more recently
+                {
+                    WalkInDirection(Vector2.left);
+                } else
+                {
+                    WalkInDirection(Vector2.right);
+                }
             }
-            else if (Input.GetKey(KeyCode.D))
+            else if (leftButton)
             {
-                if (onGround())
-                    rb.AddForce(Vector2.right * walkAccel);
-                else if (!onWallR())
-                    rb.AddForce(Vector2.right * walkAccel / 1.25F);
-                if(!facingRight)
-                    transform.localScale = new Vector3(1, transform.localScale.y, transform.localScale.z);
-                facingRight = true;
-                //anim.SetBool("walking", true);
-                //transform.localScale = new Vector3(1, transform.localScale.y, transform.localScale.z);
+                WalkInDirection(Vector2.left);
+            }
+            else if (rightButton)
+            {
+                WalkInDirection(Vector2.right);
             }
             else
             {
@@ -112,14 +146,8 @@ public class Movement : MonoBehaviour
             dashTimer = dashLength;
             rb.gravityScale = 0;
             rb.velocity = new Vector2(0, 0);
-            if (facingRight)
-            {
-                rb.velocity = new Vector2(maxWalkSpeed * 2F, 0);
-            }
-            else
-            {
-                rb.velocity = new Vector2(-maxWalkSpeed * 2F, 0);
-            }
+            rb.velocity = Mathf.Sin(Mathf.Deg2Rad*directionFacing) * new Vector2(maxWalkSpeed * 2F, 0);
+            
         }
 
         /**
@@ -144,7 +172,6 @@ public class Movement : MonoBehaviour
                 dashTimer--;
             }
         }
-
         // Max Velocity Check
         float xSpeed = rb.velocity.x;
         if (Mathf.Abs(xSpeed) > maxWalkSpeed && !dashing)
@@ -171,6 +198,14 @@ public class Movement : MonoBehaviour
         if (transform.position.y < minHeight)
             Die();
    
+    }
+    void WalkInDirection(Vector2 direction) //direction should be either vector2.left or vector2.right
+    {
+        if (onGround())
+            rb.AddForce(direction * walkAccel);
+        else if (!onWallL())
+            rb.AddForce(direction* walkAccel / 1.25F);
+
     }
 
     // Bounds setting
