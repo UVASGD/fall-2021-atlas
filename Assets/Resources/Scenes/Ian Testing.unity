@@ -1519,6 +1519,22 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player
       objectReference: {fileID: 0}
+    - target: {fileID: 3153496238293602231, guid: 345becfeed7a03d42ba8e56107dac0e2, type: 3}
+      propertyPath: m_Size.x
+      value: 1.625
+      objectReference: {fileID: 0}
+    - target: {fileID: 3153496238293602231, guid: 345becfeed7a03d42ba8e56107dac0e2, type: 3}
+      propertyPath: m_Size.y
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 3153496238293602231, guid: 345becfeed7a03d42ba8e56107dac0e2, type: 3}
+      propertyPath: m_Offset.x
+      value: -0.015
+      objectReference: {fileID: 0}
+    - target: {fileID: 3153496238293602231, guid: 345becfeed7a03d42ba8e56107dac0e2, type: 3}
+      propertyPath: m_Offset.y
+      value: -0.04
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 345becfeed7a03d42ba8e56107dac0e2, type: 3}
 --- !u!1001 &5309377836185903986

@@ -143,14 +143,20 @@ public class DialogueScript : MonoBehaviour
                     talking = false;
                     pic1.sprite = null;
                     pic2.sprite = null;
+                    tfName.position = new Vector3(tfName.parent.position.x - 6.5F, tfName.position.y, tfName.position.z);
                     finished = true;
                     break;
                 case "NAME:":
                     // Reposition name box
                     if (nametag.text != "")
-                        tfName.position = new Vector3(tfName.position.x * -1, tfName.position.y, tfName.position.z);
+                    {
+                        if(tfName.position.x - tfName.parent.position.x < 0)
+                            tfName.position = new Vector3(tfName.parent.position.x + 6.5F, tfName.position.y, tfName.position.z);
+                        else
+                            tfName.position = new Vector3(tfName.parent.position.x - 6.5F, tfName.position.y, tfName.position.z);
+                    }
                     float col = 100F;
-                    if (tfName.position.x > 0)
+                    if (tfName.position.x - tfName.parent.position.x > 0)
                     {
                         pic1.color = new Color(col / 255F, col / 255F, col / 255F, 1);
                         pic2.color = new Color(255, 255, 255, 1);
