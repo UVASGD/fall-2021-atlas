@@ -66,10 +66,13 @@ public class playerCombat : MonoBehaviour
 
         // temp attack animation: just show a slash lol
         // this can be deleted later if we want to, just a temp thing to show a slash while attacking
-        float rotation = playerMovement.directionFacing* Mathf.Deg2Rad;
-        Vector3 instantiatePosition = attackRadius * new Vector3(Mathf.Cos(rotation), Mathf.Sin(rotation), 0) + Vector3.back;
-        Quaternion instantiateRotation = Quaternion.Euler(0, 0, playerMovement.directionFacing);
-        GameObject slash = Instantiate(attackObject, transform.position + instantiatePosition, instantiateRotation, transform);
+        if (playerMovement.directionFacing != -90)
+        {
+            float rotation = playerMovement.directionFacing * Mathf.Deg2Rad;
+            Vector3 instantiatePosition = attackRadius * new Vector3(Mathf.Cos(rotation), Mathf.Sin(rotation), 0) + Vector3.back;
+            Quaternion instantiateRotation = Quaternion.Euler(0, 0, playerMovement.directionFacing);
+            GameObject slash = Instantiate(attackObject, transform.position + instantiatePosition, instantiateRotation, transform);
+        }
         //TODO if the attack animation is directional, account for whether the player is flipped.   
         // slash.GetComponent<SpriteRenderer>().flipX = playerMovement.lookingRight;
 

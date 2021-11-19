@@ -62,6 +62,7 @@ public class MenuScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        // Open Menu Code
         if (hidden && Input.anyKey && !growingW && !growingH)
         {
             growingH = true;
@@ -126,7 +127,7 @@ public class MenuScript : MonoBehaviour
     {
         // TODO
         
-        /*
+        
         switch (actions[pos][0]) {
             case 'L':
                 SceneManager.LoadScene(actions[pos].Substring(1));
@@ -137,6 +138,6 @@ public class MenuScript : MonoBehaviour
                 height = float.Parse(ins[2]);
                 break;
         }
-        */
+        
     }
 }
