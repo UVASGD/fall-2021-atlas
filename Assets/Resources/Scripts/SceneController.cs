@@ -14,7 +14,8 @@ public class SceneController: MonoBehaviour
     {
         {"Menu", "Title Screen" },
         {"Level1", "Grant Testing"} ,
-        {"Level2", "Jimmy Testing" }
+        {"Level2", "Jimmy Testing" } ,
+        {"Level3", "Ian Testing" }
     };
 
     public void Start()
