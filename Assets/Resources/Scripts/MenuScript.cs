@@ -2,11 +2,22 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEditor;
+using System;
+
 
 public class MenuScript : MonoBehaviour
 {
+
+    public GameObject mainPrefab;
+    public GameObject optionsPrefab;
+    public GameObject pausePrefab;
+    public static GameObject currentMenu;
+
+    public Dictionary<string, MenuAction> actions;
+
+
     public List<string> menuOptions;
-    public List<string> actions;
     public GameObject dummyString;
     public GameObject cursor;
 
@@ -21,10 +32,28 @@ public class MenuScript : MonoBehaviour
     private bool hidden = true;
     private bool growingH;
     private bool growingW;
-
+    private bool growingTriggered = false;
     // Start is called before the first frame update
     void Start()
     {
+        currentMenu = this.gameObject;
+
+        print(optionsPrefab);
+        actions = new Dictionary<string, MenuAction>() {
+        { "Options", new MenuAction(ActionType.OPEN_MENU, optionsPrefab) },
+        { "Pause", new MenuAction(ActionType.OPEN_MENU, pausePrefab) },
+        { "Back", new MenuAction(ActionType.OPEN_MENU, mainPrefab) },
+
+        {"Main Menu", new MenuAction(ActionType.LOAD_MENU_SCENE, "Title Screen")},
+        {"Credits", new MenuAction(ActionType.LOAD_MENU_SCENE, "Credits") },
+        {"Start", new MenuAction(ActionType.LOAD_LEVEL_SCENE, -1) },
+
+
+
+        {"Quit", new MenuAction(ActionType.MISC, (Action)( () =>  Application.Quit() )) },
+        { "Resume", new MenuAction(ActionType.MISC, (Action)(() => { Time.timeScale = 1; Destroy(currentMenu); }))}
+
+    };
         // Initiate listConts List
         listConts = new List<Renderer>();
 
@@ -58,11 +87,14 @@ public class MenuScript : MonoBehaviour
             listConts[i+1].material.color = new Color(255, 255, 255, 0);
         }
     }
-
+    public void StartGrowing()
+    {
+        growingTriggered = true;
+    }
     // Update is called once per frame
     void Update()
     {
-        if (hidden && Input.anyKey && !growingW && !growingH)
+        if (hidden && (growingTriggered || Input.anyKey) && !growingW && !growingH)
         {
             growingH = true;
             sp.size = new Vector2(0.5F, 0.5F);
@@ -117,26 +149,56 @@ public class MenuScript : MonoBehaviour
             // Activates based off of entry value
             if (Input.GetKeyDown(KeyCode.Return))
             {
-                takeAction();
+                takeAction(menuOptions[pos]);
             }
         }
     }
 
-    public void takeAction()
+    public void takeAction(String actionName)
     {
-        // TODO
-        
-        /*
-        switch (actions[pos][0]) {
-            case 'L':
-                SceneManager.LoadScene(actions[pos].Substring(1));
+        MenuAction actionToTake = actions[actionName];
+        switch (actionToTake.type)
+        {
+            case ActionType.LOAD_LEVEL_SCENE:
+                int levelNum = (int)actionToTake.storedInfo;
+                if (levelNum == -1)
+                {
+                    SceneController.ReturnToCurLevel();
+                }
+                else
+                {
+                    SceneController.LoadLevel(levelNum);
+                }
                 break;
-            case 'M':
-                string[] ins = actions[pos].Split(' ');
-                width = float.Parse(ins[1]);
-                height = float.Parse(ins[2]);
+            case ActionType.LOAD_MENU_SCENE:
+                string menuName = (string)actionToTake.storedInfo;
+                SceneController.DivertToNonLevel(menuName);
                 break;
+            case ActionType.OPEN_MENU:
+                GameObject newMenu = (GameObject)actionToTake.storedInfo;
+                if (currentMenu != null)
+                {
+                    Destroy(currentMenu);
+                }
+                currentMenu = Instantiate(newMenu);
+                currentMenu.SendMessage("StartGrowing");
+                break;
+
         }
-        */
     }
+}
+
+[ExecuteInEditMode]
+public class MenuAction {
+    public ActionType type;
+    public object storedInfo;
+    public MenuAction(ActionType type, object loadGoal)
+    {
+        this.type = type;
+        this.storedInfo = loadGoal;
+    }
+}
+public enum ActionType
+{
+    LOAD_LEVEL_SCENE, LOAD_MENU_SCENE, OPEN_MENU, MISC
 }

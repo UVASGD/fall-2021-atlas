@@ -13,6 +13,7 @@ public class SceneController: MonoBehaviour
     static Dictionary<string, string> scenes = new Dictionary<string, string>
     {
         {"Menu", "Title Screen" },
+        {"Credits", "Credits" },
         {"Level1", "Grant Testing"} ,
         {"Level2", "Jimmy Testing" }
     };

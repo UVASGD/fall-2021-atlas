@@ -17,4 +17,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Resources/Scenes/Jimmy Testing.unity
     guid: 822c711e40f961a4eaa575b0de22850a
+  - enabled: 1
+    path: Assets/Resources/Scenes/Credits.unity
+    guid: 8412ea77d4580c243b3f825eedd47eca
   m_configObjects: {}
