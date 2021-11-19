@@ -38,7 +38,6 @@ public class MenuScript : MonoBehaviour
     {
         currentMenu = this.gameObject;
 
-        print(optionsPrefab);
         actions = new Dictionary<string, MenuAction>() {
         { "Options", new MenuAction(ActionType.OPEN_MENU, optionsPrefab) },
         { "Pause", new MenuAction(ActionType.OPEN_MENU, pausePrefab) },
