@@ -641,7 +641,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   follow: {fileID: 0}
   speed: 0.05
-  xRange: 5
+  xRange: 0.2
   yRange: 0
   xLimMin: 0
   xLimMax: 30

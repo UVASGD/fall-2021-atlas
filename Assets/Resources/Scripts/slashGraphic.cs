@@ -25,7 +25,14 @@ public class slashGraphic : MonoBehaviour
     }
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        collision.gameObject.SendMessage("TakeDamage", 30);
-        Debug.Log("Hit!");
+        try
+        {
+            collision.gameObject.SendMessage("TakeDamage", 30);
+        }
+        catch
+        {
+
+        }
+        //collision.gameObject.SendMessage("TakeDamage", 30);
     }
 }
