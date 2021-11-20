@@ -24,7 +24,7 @@ public class AppManager : MonoBehaviour
 
     void Awake()
     {
-        QualitySettings.vSyncCount = 0;
+        QualitySettings.vSyncCount = 1;
         Application.targetFrameRate = 60;
         Movement.canMove = true;
         /*shifting = false;

@@ -17,6 +17,7 @@ GameObject:
   - component: {fileID: -998708281366058015}
   - component: {fileID: -4680133206348845871}
   - component: {fileID: -624445681260028960}
+  - component: {fileID: -4899225310890786240}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -33,7 +34,7 @@ Transform:
   m_GameObject: {fileID: 3153496238293602229}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: -1, z: 0}
-  m_LocalScale: {x: 2, y: 4, z: 1}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -72,18 +73,18 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
+  m_Offset: {x: -0.015, y: -0.04}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 0.24, y: 0.25}
-    newSize: {x: 0.01, y: 0.01}
+    oldSize: {x: 1.8, y: 3.1}
+    newSize: {x: 1.5333333, y: 3}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.24, y: 0.25}
+  m_Size: {x: 1.625, y: 3}
   m_EdgeRadius: 0
 --- !u!212 &3153496238293602228
 SpriteRenderer:
@@ -125,12 +126,12 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 230f9a3279d79a54abc5949240bd2799, type: 3}
-  m_Color: {r: 0, g: 0.11333633, b: 0.6886792, a: 1}
+  m_Sprite: {fileID: 4832644886028264000, guid: 9468d18b8963bfe4299f7462b5b2e31a, type: 3}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 0.01, y: 0.01}
+  m_Size: {x: 1.5333333, y: 3}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
@@ -148,15 +149,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d8590ff7de9e2f743bc0176c219ebde3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  UP_BUTTON_CODE: 119
+  DOWN_BUTTON_CODE: 115
+  LEFT_BUTTON_CODE: 97
+  RIGHT_BUTTON_CODE: 100
+  JUMP_BUTTON_CODE: 32
   maxWalkSpeed: 10
   maxFallSpeed: 25
   jumpBurst: 900
   maxJump: 0.2
   directionFacing: 0
+  lookingRight: 1
   walls:
     serializedVersion: 2
     m_Bits: 64
-  lookingRight: 1
 --- !u!114 &-4792658507800525579
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -169,6 +175,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cde03367ba9b65d4b82d2aa5599d1a8b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  path: []
   pathIndicator: {fileID: 7161117637647109050, guid: 39338e239faddc44ca7c9a30c2c6c319, type: 3}
   pathSizeFrames: 150
   travelBackSpeedFrames: 5
@@ -184,11 +191,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 97d13f317afb05146be6607bb0340cb8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  maxHealth: 100
+  health: 0
   attackRange: 0.85
   attackDamage: 50
   attackRate: 2
-  attackRadius: 2
-  attackObject: {fileID: 0}
+  attackRadius: 2.25
+  attackObject: {fileID: 8241851824818242529, guid: 73f442af7bdd5ff4ca6abd9de30326fa, type: 3}
+  iFrames: 20
 --- !u!114 &-4680133206348845871
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -202,8 +212,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   slider: {fileID: 2007603726217466392, guid: b352eb054bdb2cc48a0d541f7b04303f, type: 3}
-  maxHealth: 100
-  currentHealth: 0
 --- !u!114 &-624445681260028960
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -219,3 +227,22 @@ MonoBehaviour:
   slider: {fileID: 1088130341834486437, guid: 6aa59215e1e6da3429436048c2a204ef, type: 3}
   maxEnergy: 100
   currentEnergy: 0
+--- !u!95 &-4899225310890786240
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3153496238293602229}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: dcaefce5327719545a5f46972de3f577, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0

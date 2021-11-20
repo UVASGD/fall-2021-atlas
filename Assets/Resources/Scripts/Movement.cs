@@ -14,7 +14,7 @@ public class Movement : MonoBehaviour
 
 
 
-    public KeyCode UP_BUTTON_CODE = KeyCode.W, DOWN_BUTTON_CODE = KeyCode.S, LEFT_BUTTON_CODE = KeyCode.A, RIGHT_BUTTON_CODE = KeyCode.D, JUMP_BUTTON_CODE = KeyCode.W;
+    public KeyCode UP_BUTTON_CODE = KeyCode.W, DOWN_BUTTON_CODE = KeyCode.S, LEFT_BUTTON_CODE = KeyCode.A, RIGHT_BUTTON_CODE = KeyCode.D, JUMP_BUTTON_CODE = KeyCode.Space;
 
     public int maxWalkSpeed;
     public int maxFallSpeed;
@@ -101,7 +101,7 @@ public class Movement : MonoBehaviour
                 startJump = Time.time;
                 jumping = true;
             }
-            else if (jumping && (jumpButton || (startJump + maxJump < Time.time)))
+            else if (jumping && (Input.GetKeyUp(JUMP_BUTTON_CODE) || (startJump + maxJump < Time.time)))
             {
                 jumping = false;
                 rb.velocity = new Vector2(rb.velocity.x, rb.velocity.y / 1.75F);
@@ -112,19 +112,31 @@ public class Movement : MonoBehaviour
             {
                 if (lookingRight)// move in the direction that was pressed first, not the one pressed more recently
                 {
-                    WalkInDirection(Vector2.left);
+                    if (onGround())
+                        rb.AddForce(Vector2.left * walkAccel);
+                    else if (!onWallL())
+                        rb.AddForce(Vector2.left * walkAccel / 1.25F);
                 } else
                 {
-                    WalkInDirection(Vector2.right);
+                    if (onGround())
+                        rb.AddForce(Vector2.right * walkAccel);
+                    else if (!onWallR())
+                        rb.AddForce(Vector2.right * walkAccel / 1.25F);
                 }
             }
             else if (leftButton)
             {
-                WalkInDirection(Vector2.left);
+                if (onGround())
+                    rb.AddForce(Vector2.left * walkAccel);
+                else if (!onWallL())
+                    rb.AddForce(Vector2.left * walkAccel / 1.25F);
             }
             else if (rightButton)
             {
-                WalkInDirection(Vector2.right);
+                if (onGround())
+                    rb.AddForce(Vector2.right * walkAccel);
+                else if (!onWallR())
+                    rb.AddForce(Vector2.right * walkAccel / 1.25F);
             }
             else
             {
@@ -198,14 +210,6 @@ public class Movement : MonoBehaviour
         if (transform.position.y < minHeight)
             Die();
    
-    }
-    void WalkInDirection(Vector2 direction) //direction should be either vector2.left or vector2.right
-    {
-        if (onGround())
-            rb.AddForce(direction * walkAccel);
-        else if (!onWallL())
-            rb.AddForce(direction* walkAccel / 1.25F);
-
     }
 
     // Bounds setting
