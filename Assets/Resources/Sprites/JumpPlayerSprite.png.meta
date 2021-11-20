@@ -58,7 +58,7 @@ TextureImporter:
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 60
+  spritePixelsToUnits: 30
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -80,7 +80,7 @@ TextureImporter:
     maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
-    textureCompression: 1
+    textureCompression: 0
     compressionQuality: 50
     crunchedCompression: 0
     allowsAlphaSplitting: 0
@@ -92,7 +92,7 @@ TextureImporter:
     maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
-    textureCompression: 1
+    textureCompression: 0
     compressionQuality: 50
     crunchedCompression: 0
     allowsAlphaSplitting: 0
@@ -106,10 +106,10 @@ TextureImporter:
       name: JumpPlayerSprite_0
       rect:
         serializedVersion: 2
-        x: 32
-        y: 8
-        width: 84
-        height: 162
+        x: 16
+        y: 4
+        width: 42
+        height: 81
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -127,10 +127,10 @@ TextureImporter:
       name: JumpPlayerSprite_1
       rect:
         serializedVersion: 2
-        x: 200
-        y: 12
-        width: 64
-        height: 182
+        x: 100
+        y: 6
+        width: 32
+        height: 91
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -148,10 +148,10 @@ TextureImporter:
       name: JumpPlayerSprite_2
       rect:
         serializedVersion: 2
-        x: 350
-        y: 18
-        width: 60
-        height: 184
+        x: 175
+        y: 9
+        width: 30
+        height: 92
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -169,10 +169,10 @@ TextureImporter:
       name: JumpPlayerSprite_3
       rect:
         serializedVersion: 2
-        x: 484
-        y: 22
-        width: 94
-        height: 182
+        x: 242
+        y: 11
+        width: 47
+        height: 91
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
