@@ -31,7 +31,7 @@ public class Movement : MonoBehaviour
     private bool dashing;
     private Rigidbody2D rb;
     private BoxCollider2D cl;
-    //private Animator anim;
+    private Animator anim;
     private bool jumping = true;
     private float startJump;
     private float xRangeMin;
@@ -47,7 +47,7 @@ public class Movement : MonoBehaviour
         respawnPos = new Vector3(transform.position.x, transform.position.y, transform.position.z);
         rb = GetComponent<Rigidbody2D>();
         cl = GetComponent<BoxCollider2D>();
-        //anim = GetComponent<Animator>();
+        anim = GetComponent<Animator>();
         rb.freezeRotation = true;
         this.gameObject.layer = 7;
         Camera.main.GetComponent<AppManager>().follow = transform;
@@ -90,6 +90,15 @@ public class Movement : MonoBehaviour
             directionFacing = lookingRight ? 0 : 180; //face in the direction of the last left/right buttom press. 
         }
 
+        if(rb.velocity.y < 0)
+        {
+            anim.SetBool("Rise", false);
+            anim.SetBool("Fall", true);
+        }
+        else
+        {
+            anim.SetBool("Fall", false);
+        }
 
         if (canMove)
         {
@@ -100,6 +109,7 @@ public class Movement : MonoBehaviour
                 rb.AddForce(Vector2.up * jumpBurst);
                 startJump = Time.time;
                 jumping = true;
+                anim.SetBool("Rise", true);
             }
             else if (jumping && (Input.GetKeyUp(JUMP_BUTTON_CODE) || (startJump + maxJump < Time.time)))
             {
@@ -127,20 +137,26 @@ public class Movement : MonoBehaviour
             else if (leftButton)
             {
                 if (onGround())
+                {
                     rb.AddForce(Vector2.left * walkAccel);
+                    anim.SetBool("Running", true);
+                }
                 else if (!onWallL())
                     rb.AddForce(Vector2.left * walkAccel / 1.25F);
             }
             else if (rightButton)
             {
                 if (onGround())
+                {
                     rb.AddForce(Vector2.right * walkAccel);
+                    anim.SetBool("Running", true);
+                }
                 else if (!onWallR())
                     rb.AddForce(Vector2.right * walkAccel / 1.25F);
             }
             else
             {
-                //anim.SetBool("walking", false);
+                anim.SetBool("Running", false);
             }
         }
 
