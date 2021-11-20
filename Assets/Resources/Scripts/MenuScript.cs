@@ -8,12 +8,11 @@ using System;
 
 public class MenuScript : MonoBehaviour
 {
-
+    //TODO I literally cannot make this shit work as static variables no matter how hard I try
     public GameObject mainPrefab;
     public GameObject optionsPrefab;
     public GameObject pausePrefab;
     public static GameObject currentMenu;
-
     public Dictionary<string, MenuAction> actions;
 
 
