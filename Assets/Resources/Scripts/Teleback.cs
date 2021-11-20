@@ -68,7 +68,6 @@ public class Teleback : MonoBehaviour
                 remImage[top] = sp.sprite;
                 rot[top] = sp.flipX;
 
-                print("waefjwaefoiwajefoiajewofijaoewifjoawiejfoiajewfoijaefw;oijhsfhoiudsviuhdsiuhdfghnmhngfdfghytrcyhvktrydk");
                 revInit = false;
                 for (int i = 0; i < path.Length; i++)
                 {
