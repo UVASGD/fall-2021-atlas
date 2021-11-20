@@ -18,18 +18,9 @@ public class playerCombat : MonoBehaviour
     public int iFrames = 20;  //number of invincibility frames after getting hit by an attack
     private int currentIFrames = 0;
 
-    //these two static variables let the health bar access the playerCombat from anywhere in the scene by calling playerCombat.instance
-    static playerCombat _instance;
-    public static playerCombat instance
-    {
-        get
-        {
-            return _instance;
-        }
-    }
     void Awake()
     {
-        _instance = this;
+        health = maxHealth;
     }
 
     // Start is called before the first frame update
@@ -75,10 +66,6 @@ public class playerCombat : MonoBehaviour
         }
         //TODO if the attack animation is directional, account for whether the player is flipped.   
         // slash.GetComponent<SpriteRenderer>().flipX = playerMovement.lookingRight;
-
-
-
-
 
 
     }

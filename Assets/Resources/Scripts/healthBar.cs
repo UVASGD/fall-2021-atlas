@@ -8,6 +8,7 @@ public class healthBar : MonoBehaviour
     public Slider slider;
     //public int maxHealth = 100;
     //public int currentHealth;
+    private playerCombat pc;
 
 
 
@@ -15,7 +16,8 @@ public class healthBar : MonoBehaviour
     void Start()
     {
         //currentHealth = maxHealth;
-        setMaxHealth(playerCombat.instance.health);
+        pc = FindObjectOfType<playerCombat>();
+        setMaxHealth(pc.maxHealth);
     }
 
     void Update()
@@ -26,7 +28,7 @@ public class healthBar : MonoBehaviour
         {
             TakeDamage(20);
         }*/
-        setHealth(playerCombat.instance.health);
+        setHealth(pc.health);
     }
 
 
