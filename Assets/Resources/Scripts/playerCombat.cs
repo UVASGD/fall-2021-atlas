@@ -14,6 +14,7 @@ public class playerCombat : MonoBehaviour
     public GameObject attackObject;
     float nextAttackTime = 0f;
     private Movement playerMovement;
+    private Animator anim;
     private float hitForce = 20f;     //force that's applied to the player when hit by an attack (knockback)
     public int iFrames = 20;  //number of invincibility frames after getting hit by an attack
     private int currentIFrames = 0;
@@ -27,6 +28,7 @@ public class playerCombat : MonoBehaviour
     void Start()
     {
         playerMovement = GetComponent<Movement>();
+        anim = GetComponent<Animator>();
         health = maxHealth;
     }
 
@@ -37,6 +39,7 @@ public class playerCombat : MonoBehaviour
         {
             if (Input.GetKeyDown(KeyCode.J))
             {
+                anim.SetTrigger("Attack");
                 Attack();
                 nextAttackTime = Time.time + 1f / attackRate;
             }
