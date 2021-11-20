@@ -18,7 +18,6 @@ public class MenuScript : MonoBehaviour
     private float width;
     private int size;
     private int pos;
-    private bool blue;
     private bool hidden = true;
     private bool growingH;
     private bool growingW;
@@ -63,7 +62,8 @@ public class MenuScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (hidden && Input.anyKey)
+        // Open Menu Code
+        if (hidden && Input.anyKey && !growingW && !growingH)
         {
             growingH = true;
             sp.size = new Vector2(0.5F, 0.5F);
@@ -127,7 +127,7 @@ public class MenuScript : MonoBehaviour
     {
         // TODO
         
-        /*
+        
         switch (actions[pos][0]) {
             case 'L':
                 SceneManager.LoadScene(actions[pos].Substring(1));
@@ -138,6 +138,6 @@ public class MenuScript : MonoBehaviour
                 height = float.Parse(ins[2]);
                 break;
         }
-        */
+        
     }
 }

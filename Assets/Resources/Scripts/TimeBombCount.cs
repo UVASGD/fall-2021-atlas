@@ -3,30 +3,39 @@ using System.Collections.Generic;
 using UnityEngine;
 
 
-//count down based on frames
-//for 1 frame enable collider
-//destroy object
-
 public class TimeBombCount : MonoBehaviour
 { 
 
     public Collider2D col;
 
-    private float timer = 5.0f;
+    
 
-    // Start is called before the first frame update
+    private int timer = 60;
+
     void Start()
     {
-        
+        col.enabled = false;
     }
 
     // Update is called once per frame
     void Update()
     {
-        timer -= Time.deltaTime;
-        if(timer == 1.0f)
+        
+        timer--;
+        if (timer == 0 && col.enabled)
         {
-            col.enabled = false;
+            Debug.Log("kaboom");
+            Destroy(gameObject);
         }
+
+        if (timer == 0)
+        {
+            col.enabled = true;
+            timer = 5;
+        }
+
+       
     }
+
+   
 }

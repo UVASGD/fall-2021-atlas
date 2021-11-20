@@ -1,21 +1,42 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class playerCombat : MonoBehaviour
 {
-    public Transform attackPoint;
+    public int maxHealth = 100;
+    public int health;
     public float attackRange = 0.5f;
-    public LayerMask enemyLayers;
     public int attackDamage = 50;
     public float attackRate = 2f;
+    public float attackRadius = 2f;
+    public GameObject attackObject;
     float nextAttackTime = 0f;
-    public slashGraphic slash;     //note: may delete this depending on how the attack animation works
     private Movement playerMovement;
+    private float hitForce = 20f;     //force that's applied to the player when hit by an attack (knockback)
+    public int iFrames = 20;  //number of invincibility frames after getting hit by an attack
+    private int currentIFrames = 0;
+
+    //these two static variables let the health bar access the playerCombat from anywhere in the scene by calling playerCombat.instance
+    static playerCombat _instance;
+    public static playerCombat instance
+    {
+        get
+        {
+            return _instance;
+        }
+    }
+    void Awake()
+    {
+        _instance = this;
+    }
+
     // Start is called before the first frame update
     void Start()
     {
         playerMovement = GetComponent<Movement>();
+        health = maxHealth;
     }
 
     // Update is called once per frame
@@ -31,41 +52,66 @@ public class playerCombat : MonoBehaviour
         }
     }
 
+    private void FixedUpdate()
+    {
+        if(currentIFrames > 0)
+        {
+            currentIFrames--;
+        }
+    }
+
     void Attack()
     {
         // TODO: play attack animation
 
         // temp attack animation: just show a slash lol
         // this can be deleted later if we want to, just a temp thing to show a slash while attacking
-        slash.Attack(playerMovement.facingRight);
-
-        Collider2D[] hitEnemies;
-
-        // Detect enemies in range of attack
-        if (playerMovement.facingRight)
+        if (playerMovement.directionFacing != -90)
         {
-            hitEnemies = Physics2D.OverlapCircleAll(attackPoint.position, attackRange, enemyLayers);
+            float rotation = playerMovement.directionFacing * Mathf.Deg2Rad;
+            Vector3 instantiatePosition = attackRadius * new Vector3(Mathf.Cos(rotation), Mathf.Sin(rotation), 0) + Vector3.back;
+            Quaternion instantiateRotation = Quaternion.Euler(0, 0, playerMovement.directionFacing);
+            GameObject slash = Instantiate(attackObject, transform.position + instantiatePosition, instantiateRotation, transform);
         }
-        else
-        {
-            hitEnemies = Physics2D.OverlapCircleAll(new Vector2(attackPoint.position.x - 2 * transform.localScale.x * attackPoint.localPosition.x, attackPoint.position.y), attackRange, enemyLayers);
-        }
+        //TODO if the attack animation is directional, account for whether the player is flipped.   
+        // slash.GetComponent<SpriteRenderer>().flipX = playerMovement.lookingRight;
 
-        // Damage them
-        foreach(Collider2D enemy in hitEnemies)
-        {
-            enemy.GetComponent<IDamageable>().TakeDamage(attackDamage);
-        }
+
+
+
+
+
     }
 
-    void OnDrawGizmosSelected()
+    //function controling player behavior when it gets hit by an attack- damage is the amount to subtract from health, source is where the player should get knocked back from (set it to null for no knockback)
+    public void getHit(int damage, Vector3 source)
     {
-        if(attackPoint == null)
+        if(currentIFrames < 1)
         {
-            return;
+            health -= damage;
+            currentIFrames = iFrames;
+            if(health <= 0f)
+            {
+                Die();
+            }
         }
-        Gizmos.DrawWireSphere(attackPoint.position, attackRange);
-        Gizmos.DrawWireSphere(new Vector2(attackPoint.position.x -2*transform.localScale.x * attackPoint.localPosition.x, attackPoint.position.y), attackRange);
+        if(source == null)
+        {
+            source = transform.position;
+        }
+        Vector2 myPos = new Vector2(transform.position.x, transform.position.y);
+        Vector2 sourcePos = new Vector2(source.x, source.y);
+        Vector3 dir = (sourcePos - myPos).normalized;
+        dir = dir * -1 * hitForce;
+        gameObject.GetComponent<Rigidbody2D>().AddForce(dir, ForceMode2D.Impulse);
     }
+
+    public void Die()
+    {
+        //TODO: Death animation
+
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name); //restart the scene
+    }
+
 }
 

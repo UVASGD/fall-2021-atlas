@@ -11,4 +11,10 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Resources/Scenes/Ian Testing.unity
     guid: 2cda990e2423bbf4892e6590ba056729
+  - enabled: 1
+    path: Assets/Resources/Scenes/Grant Testing.unity
+    guid: 97f657f0a02cfde498162ad573ef0c40
+  - enabled: 1
+    path: Assets/Resources/Scenes/Jimmy Testing.unity
+    guid: 822c711e40f961a4eaa575b0de22850a
   m_configObjects: {}
