@@ -19,7 +19,9 @@ public class Teleback : MonoBehaviour
     bool revInit = false;
     int top = 0;
     int oldTop = -1;
-    int totalRev;
+    int backCharge = -1;
+    int curStackSize;
+    bool backCharged = false;
     //Vector2 camSize;
     // Start is called before the first frame update
 
@@ -43,12 +45,54 @@ public class Teleback : MonoBehaviour
     void Update()
     {
         //camera.sensorSize = camSize;
-        
-        if (Input.GetKey(KeyCode.E))
+        if (!backCharged)
+        {
+
+            if (Input.GetKey(KeyCode.E))
+            {
+                backCharge++;
+            }
+            else
+            {
+
+                oldTop = -1;
+                if (prevPath[top] != null)
+                {
+                    Destroy(prevPath[top].indicator);
+                    curStackSize--;
+                }
+                prevPath[top] = new Pose(transform.position);
+                curStackSize += 1;
+
+                prevPath[top].indicator = Instantiate(pathIndicator, transform.position, Quaternion.identity);
+                remImage[top] = sp.sprite;
+                rot[top] = sp.flipX;
+
+                print("waefjwaefoiwajefoiajewofijaoewifjoawiejfoiajewfoijaefw;oijhsfhoiudsviuhdsiuhdfghnmhngfdfghytrcyhvktrydk");
+                revInit = false;
+                for (int i = 0; i < path.Length; i++)
+                {
+                    int at = (top + 1 + i * 30) % pathSizeFrames;
+                    if (prevPath[at] != null)
+                    {
+                        Vector3 pos = prevPath[at].position;
+                        path[i].position = new Vector3(pos.x, pos.y, pos.z + 1);
+                        if (pathsp[i].sprite.name != ret.name)
+                            pathsp[i].sprite = ret;
+                    }
+                }
+
+                top = (top + 1) % pathSizeFrames;
+
+            }
+            backCharged = Input.GetKeyUp(KeyCode.E) || backCharge >= curStackSize - 1;
+        }
+        else 
         {
             
             //camera.sensorSize = 0.49F*camSize;
-            if (!revInit) {
+            if (!revInit)
+            {
                 for (int i = 0; i < path.Length; i++)
                     ats[i] = (top + 1 + i * 30) % pathSizeFrames;
             }
@@ -59,16 +103,18 @@ public class Teleback : MonoBehaviour
                 top = (top - 1 + pathSizeFrames) % pathSizeFrames;
 
             }
-            if (prevPath[top]!=null)
+            if (prevPath[top] != null)
             {
                 this.transform.position = prevPath[top].position;
                 for (int i = 0; i < travelBackSpeedFrames && top != oldTop; i++)
                 {
-                    if (prevPath[top] != null)
+                    if (prevPath[top] != null && backCharge > 0)
                     {
                         Destroy(prevPath[top].indicator);
                         prevPath[top] = null;
                         top = (top - 1 + pathSizeFrames) % pathSizeFrames;
+                        curStackSize--;
+                        backCharge--;
                     }
                 }
 
@@ -80,33 +126,12 @@ public class Teleback : MonoBehaviour
                         pathsp[i].flipX = rot[ats[i]];
                     }
                 }
-            }
-        } else
-        {
-            oldTop = -1;
-            if (prevPath[top] != null)
-            {
-                Destroy(prevPath[top].indicator);
-            }
-            prevPath[top] = new Pose(transform.position);
-            prevPath[top].indicator = Instantiate(pathIndicator, transform.position, Quaternion.identity);
-            remImage[top] = sp.sprite;
-            rot[top] = sp.flipX;
-
-            revInit = false;
-            for (int i = 0; i < path.Length; i++)
-            {
-                int at = (top + 1 + i * 30) % pathSizeFrames;
-                if (prevPath[at] != null)
+                if (backCharge == 0)
                 {
-                    Vector3 pos = prevPath[at].position;
-                    path[i].position = new Vector3(pos.x, pos.y, pos.z + 1);
-                    if (pathsp[i].sprite.name != ret.name)
-                        pathsp[i].sprite = ret;
+                    backCharge = -1;
+                    backCharged = false;
                 }
             }
-
-            top = (top + 1) % pathSizeFrames;
         }
     }
 }
