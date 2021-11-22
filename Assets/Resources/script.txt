@@ -12,3 +12,10 @@ PIC1:Nora_Dialogue_Down
 PIC2:Nora_Dialogue_Down
 Gaming
 ENDS:
+
+This  "dialogue"  is  to  test  the  event  trigger  system.  Hopefully  it  works  fine.
+ENDS:
+
+Fuck  you,  there's  nothing  over  here.
+ENDS:
+

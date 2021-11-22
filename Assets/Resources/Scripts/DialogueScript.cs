@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class DialogueScript : MonoBehaviour
 {
-    public static bool talking;
+    public static bool canTalk;
 
     public TextMesh text;
     public TextMesh nametag;
@@ -29,6 +29,7 @@ public class DialogueScript : MonoBehaviour
     private string toRead;
     private int reader;
     private int readcnt;
+    private bool talking;
 
     // Start is called before the first frame update
     void Start()
@@ -55,9 +56,13 @@ public class DialogueScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+
+        canTalk = !talking;
         // Opening dialogue box (width)
-        if (growingW && sp.size.x < width)
+        if (Movement.grounded && growingW && sp.size.x < width)
         {
+            Time.timeScale = 0;
+            Movement.canMove = false;
             sp.size = new Vector2((width + 0.5F) / 15 + sp.size.x, 0.5F);
             tf.position = new Vector3(tf.parent.position.x - (width - 0.5F) / 2 + (sp.size.x - 0.5F) / 2, tf.position.y, tf.position.z);
             if (sp.size.x >= width)
@@ -121,6 +126,10 @@ public class DialogueScript : MonoBehaviour
         growingW = true;
         sp.size = new Vector2(0.5F, 0.5F);
         spName.color = new Color(1, 1, 1, 1);
+        /*for(int i = 0; i < script.Length; i++)
+        {
+            print(i + "       " + script[i]);
+        }*/
         at = rowNum;
         toRead = script[at];
     }
@@ -129,7 +138,7 @@ public class DialogueScript : MonoBehaviour
     {
         // Switch Case to check what the next line wants
         bool finished = false;
-        while (!finished)
+        while (toRead.Length >= 4 && !finished)
         {
             switch (toRead.Substring(0, 5))
             {
@@ -145,6 +154,8 @@ public class DialogueScript : MonoBehaviour
                     pic2.sprite = null;
                     tfName.position = new Vector3(tfName.parent.position.x - 6.5F, tfName.position.y, tfName.position.z);
                     finished = true;
+                    Time.timeScale = 1;
+                    Movement.canMove = true;
                     break;
                 case "NAME:":
                     // Reposition name box
