@@ -17,7 +17,7 @@ public class NPC : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (!DialogueScript.talking && Vector3.Distance(transform.position, player.transform.position) < 3 && Input.GetKeyDown(KeyCode.Return))
+        if (DialogueScript.canTalk && Vector3.Distance(transform.position, player.transform.position) < 3 && Input.GetKeyDown(KeyCode.Return))
         {
             textbox.gameObject.SendMessage("readDialogue", DialogueLine, SendMessageOptions.RequireReceiver);
         }

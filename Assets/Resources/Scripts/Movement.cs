@@ -23,6 +23,7 @@ public class Movement : MonoBehaviour
     public float directionFacing; //degree measure for the direction you're facing. Up = 90 degrees, positive = counterclockwise
     public bool lookingRight = true;
     public static bool canMove;
+    public static bool grounded;
    
     private Vector3 respawnPos;
     private const int walkAccel = 100;
@@ -66,50 +67,58 @@ public class Movement : MonoBehaviour
         bool leftButtonPressed = Input.GetKeyDown(LEFT_BUTTON_CODE),
             rightButtonPressed = Input.GetKeyDown(RIGHT_BUTTON_CODE);
 
-        if (rightButtonPressed)
-        {
-            lookingRight = true;
-        }
-        else if (leftButtonPressed)
-        {
-            lookingRight = false;
-        }
-        spriteRenderer.flipX = !lookingRight;
+        grounded = onGround();
 
-        //TODO allow player to change which direction they are facing even when not able to move. Consider changing.
-        if (upButton)
+        if (rb.velocity.y > 0)
         {
-            directionFacing = 90; // if up button is pressed, always face up.
+            anim.SetBool("Rise", true);
+            anim.SetBool("Fall", false);
         }
-        else if (downButton)
-        {
-            directionFacing = -90;
-        }
-        else //decide whether we're facing right or left
-        {
-            directionFacing = lookingRight ? 0 : 180; //face in the direction of the last left/right buttom press. 
-        }
-
-        if(rb.velocity.y < 0)
+        if (rb.velocity.y < 0)
         {
             anim.SetBool("Rise", false);
             anim.SetBool("Fall", true);
         }
-        else
+        if(grounded)
         {
             anim.SetBool("Fall", false);
+            anim.SetBool("Rise", false);
         }
 
         if (canMove)
         {
+
+            if (rightButtonPressed)
+            {
+                lookingRight = true;
+            }
+            else if (leftButtonPressed)
+            {
+                lookingRight = false;
+            }
+            spriteRenderer.flipX = !lookingRight;
+
+            //TODO allow player to change which direction they are facing even when not able to move. Consider changing.
+            if (upButton)
+            {
+                directionFacing = 90; // if up button is pressed, always face up.
+            }
+            else if (downButton)
+            {
+                directionFacing = -90;
+            }
+            else //decide whether we're facing right or left
+            {
+                directionFacing = lookingRight ? 0 : 180; //face in the direction of the last left/right buttom press. 
+            }
+
             // Jump Code
-            if (jumpButton && !jumping && onGround())
+            if (jumpButton && !jumping && grounded)
             {
                 rb.velocity = new Vector2(rb.velocity.x, 0);
                 rb.AddForce(Vector2.up * jumpBurst);
                 startJump = Time.time;
                 jumping = true;
-                anim.SetBool("Rise", true);
             }
             else if (jumping && (Input.GetKeyUp(JUMP_BUTTON_CODE) || (startJump + maxJump < Time.time)))
             {
@@ -122,13 +131,13 @@ public class Movement : MonoBehaviour
             {
                 if (lookingRight)// move in the direction that was pressed first, not the one pressed more recently
                 {
-                    if (onGround())
+                    if (grounded)
                         rb.AddForce(Vector2.left * walkAccel);
                     else if (!onWallL())
                         rb.AddForce(Vector2.left * walkAccel / 1.25F);
                 } else
                 {
-                    if (onGround())
+                    if (grounded)
                         rb.AddForce(Vector2.right * walkAccel);
                     else if (!onWallR())
                         rb.AddForce(Vector2.right * walkAccel / 1.25F);
@@ -136,7 +145,7 @@ public class Movement : MonoBehaviour
             }
             else if (leftButton)
             {
-                if (onGround())
+                if (grounded)
                 {
                     rb.AddForce(Vector2.left * walkAccel);
                     anim.SetBool("Running", true);
@@ -146,7 +155,7 @@ public class Movement : MonoBehaviour
             }
             else if (rightButton)
             {
-                if (onGround())
+                if (grounded)
                 {
                     rb.AddForce(Vector2.right * walkAccel);
                     anim.SetBool("Running", true);
@@ -259,13 +268,13 @@ public class Movement : MonoBehaviour
     // Spatial Awareness code (ground, wall, etc.)
     bool onGround()
     {
-        RaycastHit2D checker = Physics2D.BoxCast(cl.bounds.center, cl.bounds.size, 0F, Vector2.down, 0.3F, walls);
+        RaycastHit2D checker = Physics2D.BoxCast(cl.bounds.center, cl.bounds.size, 0F, Vector2.down, 0.1F, walls);
         Color draw;
         if (checker.collider != null)
             draw = Color.green;
         else
             draw = Color.red;
-        Debug.DrawRay(cl.bounds.center, Vector2.down * (cl.bounds.extents.y + 0.3F), draw);
+        Debug.DrawRay(cl.bounds.center, Vector2.down * (cl.bounds.extents.y + 0.1F), draw);
         return checker.collider != null;
     }
 
