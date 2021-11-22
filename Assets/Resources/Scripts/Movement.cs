@@ -79,23 +79,25 @@ public class Movement : MonoBehaviour
             anim.SetBool("Rise", false);
             anim.SetBool("Fall", true);
         }
-        if(grounded)
+        if (grounded)
         {
             anim.SetBool("Fall", false);
             anim.SetBool("Rise", false);
         }
+        if (!DialogueScript.canTalk)
+            anim.SetBool("Running", false);
 
-        if (canMove)
+        if (rightButtonPressed)
         {
+            lookingRight = true;
+        }
+        else if (leftButtonPressed)
+        {
+            lookingRight = false;
+        }
 
-            if (rightButtonPressed)
-            {
-                lookingRight = true;
-            }
-            else if (leftButtonPressed)
-            {
-                lookingRight = false;
-            }
+        if (DialogueScript.canTalk && canMove)
+        {
             spriteRenderer.flipX = !lookingRight;
 
             //TODO allow player to change which direction they are facing even when not able to move. Consider changing.
