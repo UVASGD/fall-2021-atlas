@@ -6,6 +6,7 @@ public class Boss : MonoBehaviour
 {
     public GameObject player;
     public GameObject bombPrefab;
+    public float maxDistanceToPlayer = 10;
     int attackPos = 0;
     int attackIdx = 0;
     // Start is called before the first frame update
@@ -18,6 +19,21 @@ public class Boss : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        Transform enemyTransform = this.gameObject.GetComponent<Transform>();
+        Transform goalTransform = player.GetComponent<Transform>();
+        // operator override means we can just subtract directly
+        Vector3 vecToGoal = goalTransform.position - enemyTransform.position;
+        float distance = vecToGoal.magnitude;
+        if (distance > maxDistanceToPlayer)
+        {
+            vecToGoal.z = 0;
+            vecToGoal.Normalize();
+            vecToGoal *= DASH_LENGTH;
+            dashDirectionUpdate = vecToGoal / DASH_MOVE_FRAMES;
+            dashing = true;
+
+            this.transform.position += dashDirectionUpdate/5;
+    }
         switch (attackIdx)
         {
             case 0:
@@ -104,25 +120,21 @@ public class Boss : MonoBehaviour
     public float minBombVelocity = 0, maxBombVelocity = 10;
     void throwBomb()
     {
-        /*Transform enemyTransform = this.gameObject.GetComponent<Transform>();
+        Transform enemyTransform = this.gameObject.GetComponent<Transform>();
         Transform goalTransform = player.GetComponent<Transform>();
         // operator override means we can just subtract directly
         Vector3 vecToGoal = goalTransform.position - enemyTransform.position;
-        // don't care about Z difference
-        vecToGoal.z = 0;
-        */
+        float angleToPlayer = Mathf.Atan2(vecToGoal.y, vecToGoal.x);
         GameObject bomb = Instantiate(bombPrefab, this.transform.position, this.transform.rotation);
-        float angle = Random.Range(0, 2F * Mathf.PI);
+        angleToPlayer = ((angleToPlayer * Mathf.Rad2Deg) % 360 + 360) % 360; //normalize angle
+        float offsetAngle = Random.Range(Mathf.PI / 8F, Mathf.PI / 4F) * ((angleToPlayer > 90 && angleToPlayer < 270) ? -1 : 1) ;
+        float angle = offsetAngle + angleToPlayer * Mathf.Deg2Rad;
+
         float v = Random.Range(minBombVelocity, maxBombVelocity);
         float vy = v * Mathf.Sin(angle);
         float vx = v * Mathf.Cos(angle);
 
         bomb.GetComponent<Rigidbody2D>().velocity = new Vector3(vx, vy);
-
-        
-
-        
-
 
         
     }

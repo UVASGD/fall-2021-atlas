@@ -8,9 +8,9 @@ public class TimeBombCount : MonoBehaviour
 
     public Collider2D col;
 
-    
 
-    private int timer = 60;
+    public float hitBackSpeed;
+    public int timer = 60;
 
     void Start()
     {
@@ -24,7 +24,6 @@ public class TimeBombCount : MonoBehaviour
         timer--;
         if (timer == 0 && col.enabled)
         {
-            Debug.Log("kaboom");
             Destroy(gameObject);
         }
 
@@ -34,8 +33,20 @@ public class TimeBombCount : MonoBehaviour
             timer = 5;
         }
 
-       
+
+    }
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        print("awejfoiaewjf");
+        if (collision.gameObject.tag == "Player Attack")
+        {
+            Rigidbody2D rb2d = GetComponent<Rigidbody2D>();
+            Vector3 curVel = rb2d.velocity;
+            curVel.Normalize();
+            curVel *= -hitBackSpeed;
+            rb2d.velocity = curVel;
+            print("collided!!!");
+        }   
     }
 
-   
 }
