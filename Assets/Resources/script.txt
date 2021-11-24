@@ -1,21 +1,71 @@
-NAME:Nora
+NAME:???
+PIC1:Nora_Dialogue_Blink
+...
+................
+....................................
+NOIS:buzzer
+...........................................................................
+......................................................................................................................................................
+............................................................................................................................................................................................................................................................................................................
+NOIS:buzzer
+.
+..
+...
+NOIS:buzzer
+FLTR:255,255,255,0
+PIC1:Nora_Dialogue_Surprise
+!
 PIC1:Nora_Dialogue_Normal
-PIC2:Nora_Dialogue_Blink
-This  is  a  test  line.  I  want  to  see  how  long  the  line  is  and  also  see  when  it  passes  the  end.
-Here  is  another  line  that  double  checks  to  make  sure  that  the  length  still  looks  fine.
-NAME:Nora Two
-This  is  a  test  to  see  how  well  the  speech  flip  code  works.
-NAME:Nora
-Now  we've  switched  back!
-NAME:Nora Two
+...
+Where...
 PIC1:Nora_Dialogue_Down
-PIC2:Nora_Dialogue_Down
-Gaming
+...
+PIC1:Nora_Dialogue_Normal
+Where am I?
 ENDS:
 
-This  "dialogue"  is  to  test  the  event  trigger  system.  Hopefully  it  works  fine.
+NOIS:buzzer
+NAME:P.A.
+Testing...
+One-Two... Testing...
+Gah! Still radio silent over here.
+How's it sound from over there?
+NAME:P.A.
+...
+You're a moron. You know that?
+NAME:P.A.
+Ouch.
+Why so mean? All I'm trying to do is fix the P.A. system.
+NAME:P.A.
+And that's exactly why you're a moron, Klive.
+You fixed the P.A. an hour ago. Now all you're doing is blaring the alarm every five seconds.
+NOIS:buzzer
+Like that.
+NAME:P.A. (Klive)
+Nonsense!
+If I fixed the system an hour ago, the system would've told me I did.
+I should know. I'm the one who designed the whole thing.
+NAME:P.A. (???)
+Well I'm telling you, it's fixed. Can't you trust that?
+NAME:P.A. (Klive)
+And why in the world should I go around trusting your word, Theia?
+NAME:P.A. (Theia)
+Great question Klive! Why should you go about trusting me? Why should someone as brilliant as you believe a word that comes out of an idiot like me's mouth?
+Oh! You know what might help convince you?!
+The fact that I've been standing in the chamber for the last thirty minutes listening to our conversation echo over the P.A. each time you turn it on!
+Maybe that helps you.
+NAME:P.A. (Klive)
+Oh.
+...
+Yeah.
+...
+NOIS:buzzer
+NOIS:CommsOff
+NAME:P.A. (Theia)
+That's it!
+You're dead Klive!
+NOIS:CommsOff
+NAME:???
+PIC1:Nora_Dialogue_Normal
+?
 ENDS:
-
-Fuck  you,  there's  nothing  over  here.
-ENDS:
-

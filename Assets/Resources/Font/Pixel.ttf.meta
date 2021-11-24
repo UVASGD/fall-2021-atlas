@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: f533735bb22dc7b4899fb8189495a8b4
+guid: 330185396d4382145acbb578db30bbf3
 TrueTypeFontImporter:
   externalObjects: {}
   serializedVersion: 4
@@ -9,10 +9,10 @@ TrueTypeFontImporter:
   characterPadding: 1
   includeFontData: 1
   fontNames:
-  - Pixelated
+  - DisposableDroid BB
   fallbackFontReferences: []
   customCharacters: 
-  fontRenderingMode: 2
+  fontRenderingMode: 0
   ascentCalculationMode: 1
   useLegacyBoundsCalculation: 0
   shouldRoundAdvanceValue: 1
