@@ -5,19 +5,23 @@ using UnityEngine;
 
 public class DialogueScript : MonoBehaviour
 {
-    public static bool talking;
+    public static bool canTalk;
 
     public TextMesh text;
     public TextMesh nametag;
     public SpriteRenderer pic1;
     public SpriteRenderer pic2;
+    public SpriteRenderer screenBlock;
     public GameObject nameBox;
+    public GameObject canvas;
     public int txtSpeed;
 
     private SpriteRenderer sp;
     private SpriteRenderer spName;
     private Transform tfName;
     private Transform tf;
+    private AudioSource auso;
+    private AudioSource tick;
     private float height;
     private float width;
     private int size;
@@ -29,6 +33,8 @@ public class DialogueScript : MonoBehaviour
     private string toRead;
     private int reader;
     private int readcnt;
+    private bool talking;
+    private bool sounding;
 
     // Start is called before the first frame update
     void Start()
@@ -38,9 +44,14 @@ public class DialogueScript : MonoBehaviour
         // Name Box Components
         spName = nameBox.GetComponent<SpriteRenderer>();
         tfName = nameBox.GetComponent<Transform>();
+        nameBox.SetActive(false);
+
+        // Sound effects
+        auso = Camera.main.GetComponent<AudioSource>();
 
         // Gets info on the dialogue box components
         sp = GetComponent<SpriteRenderer>();
+        tick = GetComponent<AudioSource>();
         tf = transform;
         height = sp.size.y;
         width = sp.size.x;
@@ -55,9 +66,13 @@ public class DialogueScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+
+        canTalk = !talking;
         // Opening dialogue box (width)
-        if (growingW && sp.size.x < width)
+        if (Movement.grounded && growingW && sp.size.x < width)
         {
+            Time.timeScale = 0;
+            Movement.canMove = false;
             sp.size = new Vector2((width + 0.5F) / 15 + sp.size.x, 0.5F);
             tf.position = new Vector3(tf.parent.position.x - (width - 0.5F) / 2 + (sp.size.x - 0.5F) / 2, tf.position.y, tf.position.z);
             if (sp.size.x >= width)
@@ -82,16 +97,27 @@ public class DialogueScript : MonoBehaviour
             }
         }
 
+        // Audio Source check
+        if(sounding && !auso.isPlaying)
+        {
+            sounding = false;
+            checkCase();
+        }
+
+
         // Autoscroll Dialogue
-        if (sp.size.y == height && reader <= toRead.Length)
+        if (sp.size.y == height && reader <= toRead.Length && !sounding)
         {
             int tmp = toRead.Length;
             for (int i = 0; i < txtSpeed && reader <= tmp; i++)
             {
-                if (readcnt > 75)
+                if (readcnt > 60)
                 {
-                    int cutoff = text.text.LastIndexOf("  ");
-                    toRead = text.text.Substring(0, cutoff) + "\n" + text.text.Substring(cutoff + 2) + toRead.Substring(text.text.Length);
+                    int cutoff = text.text.LastIndexOf(" ");
+                    if (cutoff >= 0)
+                        toRead = text.text.Substring(0, cutoff) + "\n" + text.text.Substring(cutoff + 1) + toRead.Substring(text.text.Length);
+                    else
+                        toRead = text.text + "\n" + toRead.Substring(text.text.Length);
                     readcnt = 0;
                 }
 
@@ -99,6 +125,8 @@ public class DialogueScript : MonoBehaviour
                 readcnt++;
                 reader++;
             }
+            if(!tick.isPlaying)
+                tick.Play();
         }
 
         // Next Dialogue Line
@@ -121,6 +149,11 @@ public class DialogueScript : MonoBehaviour
         growingW = true;
         sp.size = new Vector2(0.5F, 0.5F);
         spName.color = new Color(1, 1, 1, 1);
+        canvas.SetActive(false);
+        /*for(int i = 0; i < script.Length; i++)
+        {
+            print(i + "       " + script[i]);
+        }*/
         at = rowNum;
         toRead = script[at];
     }
@@ -129,8 +162,9 @@ public class DialogueScript : MonoBehaviour
     {
         // Switch Case to check what the next line wants
         bool finished = false;
-        while (!finished)
+        while (toRead.Length >= 4 && !finished)
         {
+            Debug.Log(toRead);
             switch (toRead.Substring(0, 5))
             {
                 case "ENDS:":
@@ -140,17 +174,25 @@ public class DialogueScript : MonoBehaviour
                     text.text = "";
                     nametag.text = "";
                     spName.color = new Color(255, 255, 255, 0);
+                    canvas.SetActive(true);
                     talking = false;
                     pic1.sprite = null;
                     pic2.sprite = null;
                     tfName.position = new Vector3(tfName.parent.position.x - 6.5F, tfName.position.y, tfName.position.z);
                     finished = true;
+                    Time.timeScale = 1;
+                    Movement.canMove = true;
                     break;
                 case "NAME:":
+                    if(toRead.Substring(5) != "")
+                        nameBox.SetActive(true);
+                    else
+                        nameBox.SetActive(false);
+
                     // Reposition name box
                     if (nametag.text != "")
                     {
-                        if(tfName.position.x - tfName.parent.position.x < 0)
+                        if (tfName.position.x - tfName.parent.position.x < 0)
                             tfName.position = new Vector3(tfName.parent.position.x + 6.5F, tfName.position.y, tfName.position.z);
                         else
                             tfName.position = new Vector3(tfName.parent.position.x - 6.5F, tfName.position.y, tfName.position.z);
@@ -175,6 +217,18 @@ public class DialogueScript : MonoBehaviour
                     break;
                 case "PIC2:":
                     pic2.sprite = Resources.Load<Sprite>("Sprites/" + toRead.Substring(5));
+                    break;
+                case "NOIS:":
+                    auso.clip = Resources.Load<AudioClip>("Sounds/" + toRead.Substring(5));
+                    auso.Play();
+                    sounding = true;
+                    at++;
+                    toRead = script[at];
+                    finished = true;
+                    break;
+                case "FLTR:":
+                    string[] colors = toRead.Substring(5).Split(',');
+                    screenBlock.color = new Color(int.Parse(colors[0]) / 255F, int.Parse(colors[1]) / 255F, int.Parse(colors[2]) / 255F, float.Parse(colors[3]));
                     break;
                 default:
                     finished = true;

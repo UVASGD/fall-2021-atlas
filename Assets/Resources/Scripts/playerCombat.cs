@@ -14,28 +14,21 @@ public class playerCombat : MonoBehaviour
     public GameObject attackObject;
     float nextAttackTime = 0f;
     private Movement playerMovement;
+    private Animator anim;
     private float hitForce = 20f;     //force that's applied to the player when hit by an attack (knockback)
     public int iFrames = 20;  //number of invincibility frames after getting hit by an attack
     private int currentIFrames = 0;
 
-    //these two static variables let the health bar access the playerCombat from anywhere in the scene by calling playerCombat.instance
-    static playerCombat _instance;
-    public static playerCombat instance
-    {
-        get
-        {
-            return _instance;
-        }
-    }
     void Awake()
     {
-        _instance = this;
+        health = maxHealth;
     }
 
     // Start is called before the first frame update
     void Start()
     {
         playerMovement = GetComponent<Movement>();
+        anim = GetComponent<Animator>();
         health = maxHealth;
     }
 
@@ -46,6 +39,7 @@ public class playerCombat : MonoBehaviour
         {
             if (Input.GetKeyDown(KeyCode.J))
             {
+                anim.SetTrigger("Attack");
                 Attack();
                 nextAttackTime = Time.time + 1f / attackRate;
             }
@@ -75,10 +69,6 @@ public class playerCombat : MonoBehaviour
         }
         //TODO if the attack animation is directional, account for whether the player is flipped.   
         // slash.GetComponent<SpriteRenderer>().flipX = playerMovement.lookingRight;
-
-
-
-
 
 
     }
