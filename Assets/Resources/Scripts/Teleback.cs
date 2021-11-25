@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
 public class Teleback : MonoBehaviour
 {
@@ -9,6 +10,7 @@ public class Teleback : MonoBehaviour
     public GameObject pathIndicator;
     public int pathSizeFrames = 150;
     public int travelBackSpeedFrames = 5;
+    public int backChargeDelta = 2;
     Pose[] prevPath;
     Sprite[] remImage;
     bool[] rot;
@@ -50,7 +52,21 @@ public class Teleback : MonoBehaviour
 
             if (Input.GetKey(KeyCode.E))
             {
-                backCharge++;
+                for (int i = 0; i < backChargeDelta && !backCharged; i++)
+                {
+                    backCharge++;
+                    try
+                    {
+                        prevPath[((top - backCharge) + pathSizeFrames) % pathSizeFrames].indicator.SetActive(true);
+                    } catch (Exception e)
+                    {
+                        Debug.LogError(e.Message);
+                    }
+
+                    backCharged = Input.GetKeyUp(KeyCode.E) || backCharge >= curStackSize - 2;
+
+                }
+
             }
             else
             {
@@ -110,6 +126,8 @@ public class Teleback : MonoBehaviour
                     if (prevPath[top] != null && backCharge > 0)
                     {
                         Destroy(prevPath[top].indicator);
+                        sp.sprite = remImage[top];
+
                         prevPath[top] = null;
                         top = (top - 1 + pathSizeFrames) % pathSizeFrames;
                         curStackSize--;
@@ -125,7 +143,7 @@ public class Teleback : MonoBehaviour
                         pathsp[i].flipX = rot[ats[i]];
                     }
                 }
-                if (backCharge == 0)
+                if (backCharge <= 0)
                 {
                     backCharge = -1;
                     backCharged = false;

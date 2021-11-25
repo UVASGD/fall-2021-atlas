@@ -70,10 +70,6 @@ public class Boss : MonoBehaviour
     {
         if (attackPos < DASH_IDLE_FRAMES)
         {
-            dashing = false;
-            //todo idle animation
-        } else if (attackPos < DASH_IDLE_FRAMES + DASH_MOVE_FRAMES)
-        {
             if (dashing == false)
             {
                 Transform enemyTransform = this.gameObject.GetComponent<Transform>();
@@ -87,11 +83,15 @@ public class Boss : MonoBehaviour
                 dashDirectionUpdate = vecToGoal / DASH_MOVE_FRAMES;
                 dashing = true;
             }
+
+            //todo idle animation
+        }
+        else if (attackPos < DASH_IDLE_FRAMES + DASH_MOVE_FRAMES)
+        {
             this.transform.position += dashDirectionUpdate;
-
-
         } else if (attackPos < DASH_IDLE_FRAMES + DASH_MOVE_FRAMES + DASH_ENDLAG_FRAMES)
         {
+            dashing = false;
             //todo lagged animation
         }
         else

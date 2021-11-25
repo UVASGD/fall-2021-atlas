@@ -24,16 +24,14 @@ public class goombaEnemy : MonoBehaviour, IDamageable
             speed = -1f * speed;
             sightDistanceToWall = -1f * sightDistanceToWall;
         }
+        
     }
 
     // Update is called once per frame
     void FixedUpdate()
     {
         rb.velocity = new Vector2(speed, rb.velocity.y);    //set velocity
-        colliding = Physics2D.Linecast(transform.position, new Vector2(transform.position.x + sightDistanceToWall, transform.position.y), LayerMask.GetMask("Wall"));
-        if (Physics2D.Linecast(transform.position, new Vector2(transform.position.x + sightDistanceToWall, transform.position.y), LayerMask.GetMask("Default"))) {
-            print("hello");
-        } //check if hit a wall
+        colliding = Physics2D.Linecast(new Vector2(transform.position.x + sightDistanceToWall-0.01f, transform.position.y), new Vector2(transform.position.x + sightDistanceToWall, transform.position.y), LayerMask.GetMask("Wall","Enemy Layer","Player"));
         if (colliding)  // turn around if you hit a wall or player
         {
             speed = -1f * speed;

@@ -37,7 +37,7 @@ public class TimeBombCount : MonoBehaviour
     }
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        print("awejfoiaewjf");
+
         if (collision.gameObject.tag == "Player Attack")
         {
             Rigidbody2D rb2d = GetComponent<Rigidbody2D>();
