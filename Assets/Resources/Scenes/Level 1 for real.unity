@@ -267,6 +267,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1239877495}
     - target: {fileID: 6853509794005713200, guid: fe7e58b7abe20964084e143598905458, type: 3}
+      propertyPath: variation
+      value: 114
+      objectReference: {fileID: 0}
+    - target: {fileID: 6853509794005713200, guid: fe7e58b7abe20964084e143598905458, type: 3}
       propertyPath: activationType
       value: Speech
       objectReference: {fileID: 0}
@@ -547,7 +551,11 @@ PrefabInstance:
       objectReference: {fileID: 1239877495}
     - target: {fileID: 6853509794005713200, guid: fe7e58b7abe20964084e143598905458, type: 3}
       propertyPath: variation
-      value: 26
+      value: 67
+      objectReference: {fileID: 0}
+    - target: {fileID: 6853509794005713200, guid: fe7e58b7abe20964084e143598905458, type: 3}
+      propertyPath: canActivate
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6853509794005713200, guid: fe7e58b7abe20964084e143598905458, type: 3}
       propertyPath: activationType
@@ -1205,7 +1213,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6625104940699784251, guid: c67a4eb43e6457e48a5c14558022aa27, type: 3}
       propertyPath: m_Color.a
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c67a4eb43e6457e48a5c14558022aa27, type: 3}
@@ -3859,6 +3867,10 @@ PrefabInstance:
       propertyPath: activator
       value: 
       objectReference: {fileID: 1239877495}
+    - target: {fileID: 6853509794005713200, guid: fe7e58b7abe20964084e143598905458, type: 3}
+      propertyPath: canActivate
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6853509794005713200, guid: fe7e58b7abe20964084e143598905458, type: 3}
       propertyPath: activationType
       value: Speech
