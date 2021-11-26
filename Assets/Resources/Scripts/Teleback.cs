@@ -12,11 +12,9 @@ public class Teleback : MonoBehaviour
     public int travelBackSpeedFrames = 5;
     public int backChargeDelta = 2;
     Pose[] prevPath;
-    Sprite[] remImage;
     bool[] rot;
     int[] ats;
     Sprite ret;
-    SpriteRenderer[] pathsp;
     SpriteRenderer sp;
     bool revInit = false;
     int top = 0;
@@ -31,16 +29,9 @@ public class Teleback : MonoBehaviour
     {
         //camSize = camera.v;
         prevPath = new Pose[pathSizeFrames];
-        remImage = new Sprite[pathSizeFrames];
         rot = new bool[pathSizeFrames];
         ats = new int[path.Length];
         sp = GetComponent<SpriteRenderer>();
-        pathsp = new SpriteRenderer[path.Length];
-        for (int i = 0; i < path.Length; i++)
-        {
-            pathsp[i] = path[i].GetComponent<SpriteRenderer>();
-        }
-        ret = pathsp[0].sprite;
     }
 
     // Update is called once per frame
@@ -49,11 +40,12 @@ public class Teleback : MonoBehaviour
         //camera.sensorSize = camSize;
         if (!backCharged)
         {
-
+            GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.FreezeRotation;
             if (Input.GetKey(KeyCode.E))
             {
                 for (int i = 0; i < backChargeDelta && !backCharged; i++)
                 {
+                    GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.FreezeAll;
                     backCharge++;
                     try
                     {
@@ -81,21 +73,12 @@ public class Teleback : MonoBehaviour
                 curStackSize += 1;
 
                 prevPath[top].indicator = Instantiate(pathIndicator, transform.position, Quaternion.identity);
-                remImage[top] = sp.sprite;
-                rot[top] = sp.flipX;
+                SpriteRenderer sp2 = prevPath[top].indicator.GetComponent<SpriteRenderer>();
+                sp2.sprite = sp.sprite;
+                sp2.flipX = sp.flipX;
+                
 
-                revInit = false;
-                for (int i = 0; i < path.Length; i++)
-                {
-                    int at = (top + 1 + i * 30) % pathSizeFrames;
-                    if (prevPath[at] != null)
-                    {
-                        Vector3 pos = prevPath[at].position;
-                        path[i].position = new Vector3(pos.x, pos.y, pos.z + 1);
-                        if (pathsp[i].sprite.name != ret.name)
-                            pathsp[i].sprite = ret;
-                    }
-                }
+                
 
                 top = (top + 1) % pathSizeFrames;
 
@@ -126,7 +109,7 @@ public class Teleback : MonoBehaviour
                     if (prevPath[top] != null && backCharge > 0)
                     {
                         Destroy(prevPath[top].indicator);
-                        sp.sprite = remImage[top];
+                        //sp.sprite = prevPath[top].GetComponent<SpriteRenderer>().;
 
                         prevPath[top] = null;
                         top = (top - 1 + pathSizeFrames) % pathSizeFrames;
@@ -135,16 +118,10 @@ public class Teleback : MonoBehaviour
                     }
                 }
 
-                for (int i = 0; i < path.Length; i++)
-                {
-                    if (prevPath[ats[i]] == null && pathsp[i].sprite.name == ret.name)
-                    {
-                        pathsp[i].sprite = remImage[ats[i]];
-                        pathsp[i].flipX = rot[ats[i]];
-                    }
-                }
+                
                 if (backCharge <= 0)
                 {
+
                     backCharge = -1;
                     backCharged = false;
                 }

@@ -69,7 +69,7 @@ BoxCollider2D:
   m_GameObject: {fileID: 3153496238293602229}
   m_Enabled: 1
   m_Density: 1
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 6200000, guid: b4d546d06c5a9f74698caac607acd103, type: 2}
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
@@ -176,11 +176,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   path:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
+  - {fileID: 5320333322119244558, guid: 8987ab870da598643bb8aadaffa94295, type: 3}
+  - {fileID: 5320333322119244558, guid: 8987ab870da598643bb8aadaffa94295, type: 3}
+  - {fileID: 5320333322119244558, guid: 8987ab870da598643bb8aadaffa94295, type: 3}
+  - {fileID: 5320333322119244558, guid: 8987ab870da598643bb8aadaffa94295, type: 3}
+  - {fileID: 5320333322119244558, guid: 8987ab870da598643bb8aadaffa94295, type: 3}
   pathIndicator: {fileID: 7161117637647109050, guid: 39338e239faddc44ca7c9a30c2c6c319, type: 3}
   pathSizeFrames: 150
   travelBackSpeedFrames: 5
