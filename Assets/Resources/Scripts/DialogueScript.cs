@@ -178,7 +178,6 @@ public class DialogueScript : MonoBehaviour
         bool finished = false;
         while (toRead.Length >= 5 && !finished)
         {
-            Debug.Log(toRead);
             switch (toRead.Substring(0, 5))
             {
                 case "ENDS:":
