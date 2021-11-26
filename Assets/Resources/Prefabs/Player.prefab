@@ -198,7 +198,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxHealth: 100
   health: 0
-  attackRange: 0.85
+  attackRange: 0.75
   attackDamage: 50
   attackRate: 2
   attackRadius: 2.25
