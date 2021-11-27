@@ -51,7 +51,6 @@ public class Movement : MonoBehaviour
         cl = GetComponent<BoxCollider2D>();
         anim = GetComponent<Animator>();
         rb.freezeRotation = true;
-        this.gameObject.layer = 7;
         Camera.main.GetComponent<AppManager>().follow = transform;
         Camera.main.SendMessage("setBounds");
     }
