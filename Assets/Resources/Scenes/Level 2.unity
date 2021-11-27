@@ -322,6 +322,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Intro Dialogue
       objectReference: {fileID: 0}
+    - target: {fileID: 6853509794005713207, guid: fe7e58b7abe20964084e143598905458, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: fe7e58b7abe20964084e143598905458, type: 3}
 --- !u!4 &128874696 stripped
@@ -604,6 +608,10 @@ PrefabInstance:
     - target: {fileID: 6853509794005713207, guid: fe7e58b7abe20964084e143598905458, type: 3}
       propertyPath: m_Name
       value: Hallway PA
+      objectReference: {fileID: 0}
+    - target: {fileID: 6853509794005713207, guid: fe7e58b7abe20964084e143598905458, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: fe7e58b7abe20964084e143598905458, type: 3}
@@ -1201,6 +1209,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2586555719944602571, guid: c67a4eb43e6457e48a5c14558022aa27, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2986655785616386972, guid: c67a4eb43e6457e48a5c14558022aa27, type: 3}
+      propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6625104940699784251, guid: c67a4eb43e6457e48a5c14558022aa27, type: 3}
@@ -3914,6 +3926,10 @@ PrefabInstance:
     - target: {fileID: 6853509794005713207, guid: fe7e58b7abe20964084e143598905458, type: 3}
       propertyPath: m_Name
       value: Wakeup Dialogue
+      objectReference: {fileID: 0}
+    - target: {fileID: 6853509794005713207, guid: fe7e58b7abe20964084e143598905458, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: fe7e58b7abe20964084e143598905458, type: 3}
