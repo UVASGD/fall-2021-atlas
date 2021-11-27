@@ -5,68 +5,63 @@ using UnityEngine;
 public class Button : MonoBehaviour
 {
     public GameObject activator;
-    public bool canActivate;
     public float yGoal;
 
-    public int timeToDrop = 10;
-    public int timeToDeactivate = 50;
+    public float upReturnVelocity = 10;
     public bool activated;
-    private Transform transform;
-    private float variation;
-    private int time;
+    private Transform trans;
+    private Rigidbody2D rb2d;
+    public float yStart;
+    private int timer;
+    private bool playerOn = false;
+    public int timeToUp = 50;
 
     void Start()
     {
-        transform = GetComponent<Transform>();
 
-        variation = yGoal - transform.position.y;
+        trans = GetComponent<Transform>();
+        rb2d = GetComponent<Rigidbody2D>();
+        yStart = transform.position.y;
     }
 
     void Update()
     {
-        if (time > 0)
-        {
-            if (activated)
-            {
-                transform.position = new Vector3(transform.position.x, transform.position.y + variation / (float)timeToDrop);
-            } else
-            {
-                transform.position = new Vector3(transform.position.x, transform.position.y - variation / (float)timeToDeactivate);
 
-            }
-            time--;
-        } else if (time == 0)
+        if (trans.position.y >= yStart)
         {
             activated = false;
+            rb2d.velocity = Vector2.zero;
         }
+        else if (trans.position.y <= yGoal && playerOn) {
+            activated = true;
+
+            timer = timeToUp;
+            
+        }
+        if (timer > 0)
+        {
+            rb2d.velocity = Vector2.zero;
+            timer--;
+        }
+        else if (trans.position.y < yStart)
+        {
+            print("Awefawef");
+            rb2d.AddForce(Vector2.up * upReturnVelocity);
+        } 
+
+
     }
 
-    void OnCollisionEnter2D(Collision2D coll)
+
+    private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (canActivate && coll.collider.tag == "Player")
-        {
-            print("button on");
-            Activate();
-        }
-    }
-    void OnCollisionExit2D(Collision2D coll)
-    {
-        print("EXIT!!");
-        if (canActivate && coll.collider.tag == "Player")
-        {
-            print("button off");
-            Deactivate();
-        }
-    }
-    void Activate()
-    {
-        activated = true;
-        time = timeToDrop;
-    }
-    void Deactivate()
-    {
-        activated = false;
-        time = timeToDeactivate;
+        if (collision.tag == "Player")
+            playerOn = true;
     }
 
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        if (collision.tag == "Player")
+            playerOn = false;
+    }
 }

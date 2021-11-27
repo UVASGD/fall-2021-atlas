@@ -32,7 +32,7 @@ public class Movement : MonoBehaviour
     private int dashTimer;
     private bool dashing;
     private Rigidbody2D rb;
-    private BoxCollider2D cl;
+    private Collider2D cl;
     private Animator anim;
     private bool jumping = true;
     private float startJump;
@@ -48,10 +48,9 @@ public class Movement : MonoBehaviour
         spriteRenderer = GetComponent<SpriteRenderer>();
         respawnPos = new Vector3(transform.position.x, transform.position.y, transform.position.z);
         rb = GetComponent<Rigidbody2D>();
-        cl = GetComponent<BoxCollider2D>();
+        cl = GetComponent<Collider2D>();
         anim = GetComponent<Animator>();
         rb.freezeRotation = true;
-        this.gameObject.layer = 7;
         Camera.main.GetComponent<AppManager>().follow = transform;
         Camera.main.SendMessage("setBounds");
     }
