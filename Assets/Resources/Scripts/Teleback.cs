@@ -19,14 +19,16 @@ public class Teleback : MonoBehaviour
     bool revInit = false;
     int top = 0;
     int oldTop = -1;
-    int backCharge = -1;
+    int backCharge = 0;
     int curStackSize;
     bool backCharged = false;
+    Rigidbody2D rb2d;
     //Vector2 camSize;
     // Start is called before the first frame update
 
     void Start()
     {
+        rb2d = GetComponent<Rigidbody2D>();
         //camSize = camera.v;
         prevPath = new Pose[pathSizeFrames];
         rot = new bool[pathSizeFrames];
@@ -37,15 +39,15 @@ public class Teleback : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        //camera.sensorSize = camSize;
+        //print("StackSize " + curStackSize);
         if (!backCharged)
         {
-            GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.FreezeRotation;
             if (Input.GetKey(KeyCode.E))
             {
+                rb2d.constraints = RigidbodyConstraints2D.FreezeAll;
+                backCharged = Input.GetKeyUp(KeyCode.E) || backCharge >= curStackSize;
                 for (int i = 0; i < backChargeDelta && !backCharged; i++)
                 {
-                    GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.FreezeAll;
                     backCharge++;
                     try
                     {
@@ -53,9 +55,11 @@ public class Teleback : MonoBehaviour
                     } catch (Exception e)
                     {
                         Debug.LogError(e.Message);
+                        print(prevPath[((top - backCharge) + pathSizeFrames) % pathSizeFrames]);
+                        print("CHARGE " + backCharge + " TOP " + top + " SIZE "+ curStackSize);
+                        
                     }
-
-                    backCharged = Input.GetKeyUp(KeyCode.E) || backCharge >= curStackSize - 2;
+                    backCharged = Input.GetKeyUp(KeyCode.E) || backCharge >= curStackSize;
 
                 }
 
@@ -64,7 +68,7 @@ public class Teleback : MonoBehaviour
             {
 
                 oldTop = -1;
-                if (prevPath[top] != null)
+                if (prevPath[top] != null)//Destroy top of stack
                 {
                     Destroy(prevPath[top].indicator);
                     curStackSize--;
@@ -72,18 +76,19 @@ public class Teleback : MonoBehaviour
                 prevPath[top] = new Pose(transform.position);
                 curStackSize += 1;
 
-                prevPath[top].indicator = Instantiate(pathIndicator, transform.position, Quaternion.identity);
+                prevPath[top].indicator = Instantiate(pathIndicator, transform.position, Quaternion.identity);//add to top of stack
                 SpriteRenderer sp2 = prevPath[top].indicator.GetComponent<SpriteRenderer>();
                 sp2.sprite = sp.sprite;
                 sp2.flipX = sp.flipX;
+                sp2.color = new Color(1,1,1,.3F);
                 
 
                 
 
-                top = (top + 1) % pathSizeFrames;
+                top = (top + 1) % pathSizeFrames;//increment top
 
             }
-            backCharged = Input.GetKeyUp(KeyCode.E) || backCharge >= curStackSize - 1;
+            backCharged = Input.GetKeyUp(KeyCode.E) || backCharge >= curStackSize;
         }
         else 
         {
@@ -121,8 +126,8 @@ public class Teleback : MonoBehaviour
                 
                 if (backCharge <= 0)
                 {
+                    rb2d.constraints = RigidbodyConstraints2D.FreezeRotation;
 
-                    backCharge = -1;
                     backCharged = false;
                 }
             }

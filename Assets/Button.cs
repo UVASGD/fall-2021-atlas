@@ -12,7 +12,7 @@ public class Button : MonoBehaviour
     private Transform trans;
     private Rigidbody2D rb2d;
     public float yStart;
-    private int timer;
+    public int timer;
     private bool playerOn = false;
     public int timeToUp = 50;
 
@@ -40,12 +40,12 @@ public class Button : MonoBehaviour
         }
         if (timer > 0)
         {
-            rb2d.velocity = Vector2.zero;
+            rb2d.constraints = RigidbodyConstraints2D.FreezeAll;
             timer--;
         }
         else if (trans.position.y < yStart)
         {
-            print("Awefawef");
+            rb2d.constraints = RigidbodyConstraints2D.FreezeRotation | RigidbodyConstraints2D.FreezePositionX;
             rb2d.AddForce(Vector2.up * upReturnVelocity);
         } 
 
