@@ -5,11 +5,12 @@ using UnityEngine;
 public class trampoline : MonoBehaviour
 {
     // Start is called before the first frame update
-    public float force = 30f;
+    public float forceMagnnitude = 30f;
     public ParticleSystem ps;
+    Transform trans;
     void Start()
     {
-        
+        trans = GetComponent<Transform>();
     }
 
     // Update is called once per frame
@@ -19,14 +20,25 @@ public class trampoline : MonoBehaviour
     }
     public void OnTriggerEnter2D(Collider2D collision)
     {
+        float rot = trans.rotation.eulerAngles.z + 90;
+        Vector3 forceDirection = new Vector3(Mathf.Cos(rot * Mathf.Deg2Rad), Mathf.Sin(rot * Mathf.Deg2Rad));
         if (collision.gameObject.tag == "Player")
         {
+
             Rigidbody2D rb = collision.gameObject.GetComponent<Rigidbody2D>();
-            rb.AddForce(new Vector2(0, -1*rb.velocity.y + force), ForceMode2D.Impulse);
+            Vector3 force = -Vector3.Project(rb.velocity, forceDirection);
+            Vector2 force2D = force;
+            force2D += (Vector2)forceDirection * forceMagnnitude; /// total force = playerVelocityInDirectionOfTrampoline + forceMagnitude
+            print(force2D);
+            rb.AddForce(force2D, ForceMode2D.Impulse);
         }else if(collision.gameObject.tag == "Enemy")
         {
             Rigidbody2D rb = collision.gameObject.GetComponent<Rigidbody2D>();
-            rb.AddForce(new Vector2(0, -1 * rb.velocity.y + force/2f), ForceMode2D.Impulse);
+            Vector3 force = -Vector3.Project(rb.velocity, forceDirection);
+            Vector2 force2D = new Vector2(force.x, force.y)/2F;
+            force2D += force2D.normalized * forceMagnnitude/2F; /// total force = enemyVelocityInDirectionOfTrampoline + forceMagnitude/2
+
+            rb.AddForce(force2D, ForceMode2D.Impulse);
         }
         ps.Play();
     }
