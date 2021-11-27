@@ -1,3 +1,44 @@
+NOIS:RevInterrupt
+SONG:Play,RainyMelody
+WAIT:3
+The air is thick with smoke blocking out the sky.
+Rain drops carve their paths over my cheeks.
+The charcoal smog bites at my throat as I gasp for breath.
+But all that seems to fill my lungs is the stain of bloody rain cutting through the air.
+A man walks up to me, eyeing me through his horizonless visor.
+I try to find the strength to run once more.
+All of the muscles and veins in my being. Begging for the shot of electricity they need to move.
+NOIS:Slash
+FLTR:150,10,0,1
+Blood seeps from a freshly cut wound.
+NAME:???
+HEY!!! I told you not to touch that one!
+NAME:
+FLTR:102,7,0,1
+The voice rings out from the distance, saving me from my unpreventable death.
+The same voice that, moments ago, gave the order to kill us all...
+FLTR:64,4,0,1
+My body lays limp. The smoke clouds the moonlight further.
+Rain flushes the tears out of my eyes.
+I wait and wait. Wait for the blood to let it all end for me.
+But it wont.
+FLTR:26,2,0,1
+Medics have surrounded me now, frantically patching my body together at the seams.
+I feel myself starting to go.
+FLTR:0,0,0,1
+Starting to drift away.
+My eyelids get heavier and heavier with each passing moment.
+I'm on a stretcher now, being carried to their vehicle.
+The moon has long since lost its brilliant shine.
+The distant sounds of war trail behind me.
+I'm lucky to have escaped... Or so I think.
+Just as my mind drifts away.
+Just as...
+.
+EMPT:
+SONG:Stop,RainyMelody
+WAIT:3
+NOIS:buzzer
 NAME:???
 PIC1:Nora_Dialogue_Blink
 ...
@@ -12,7 +53,7 @@ NOIS:buzzer
 ..
 ...
 NOIS:buzzer
-FLTR:255,255,255,0
+FLTR:0,0,0,0
 PIC1:Nora_Dialogue_Surprise
 !
 PIC1:Nora_Dialogue_Normal
@@ -32,10 +73,11 @@ Gah! Still radio silent over here.
 How's it sound from over there?
 NAME:P.A.
 ...
-You're a moron. You know that?
+You're a moron, you know that?
 NAME:P.A.
 Ouch.
-Why so mean? All I'm trying to do is fix the P.A. system.
+Why do you have to be so mean?
+All I'm trying to do is fix the P.A. system.
 NAME:P.A.
 And that's exactly why you're a moron, Klive.
 You fixed the P.A. an hour ago. Now all you're doing is blaring the alarm every five seconds.
@@ -52,7 +94,7 @@ And why in the world should I go around trusting your word, Theia?
 NAME:P.A. (Theia)
 Great question Klive! Why should you go about trusting me? Why should someone as brilliant as you believe a word that comes out of an idiot like me's mouth?
 Oh! You know what might help convince you?!
-The fact that I've been standing in the chamber for the last thirty minutes listening to our conversation echo over the P.A. each time you turn it on!
+The fact that I've been standing in the chamber for the last half an hour listening to our conversation echo over the P.A. each time you turn it on!
 Maybe that helps you.
 NAME:P.A. (Klive)
 Oh.
@@ -68,4 +110,153 @@ NOIS:CommsOff
 NAME:???
 PIC1:Nora_Dialogue_Normal
 ?
+ENDS:
+
+NAME:P.A. (Klive)
+I'm telling you Theia! I didn't know!
+NAME:P.A. (Theia)
+Well I could give a flying...
+...
+NAME:P.A. (Klive)
+What? What is it?
+What are you pointing at-
+Oh.
+...
+......
+Yeah well you could've told me earlier.
+...
+EMPT:
+NOIS:CommsOn
+NAME:
+NAME:Klive
+PIC1:Klive_Dialogue_Hype
+Welcome back to the waking world Subject N-0!
+NAME:N-0
+PIC2:Nora_Dialogue_Down
+N-0?
+NAME:Klive
+We hope you've enjoyed your extended stay in cryosleep for the last twenty years or so.
+PIC1:Klive_Dialogue_Smug
+Hopefully that wasn't too long for you.
+PIC1:Klive_Dialogue_Hype
+But in the meantime, we have business to get down to.
+NAME:N-0
+PIC2:Nora_Dialogue_Surprise
+Twenty Years?
+NAME:Klive
+PIC1:Klive_Dialogue_Normal
+Forget that. It's not important.
+PIC1:Klive_Dialogue_Smug
+What is important is that you are awake right now!
+And being awake right now means you get to test some stuff out for us!
+Yep! You heard that right! Welcome to Portal 3! Valve couldn't count past three so we decided to start counting for them! I'm your host, the deadly robot psychopath GLaDOS, and this is soon to be your final resting place!
+NAME:N-0
+GLaDOS?
+NAME:GLaDOS?
+PIC1:Klive_Dialogue_Normal
+Oh... That's right.
+You probably don't remember much do you...
+...
+Forget I said anything, then.
+NAME:N-0
+Okay?
+NAME:Klive
+Just-
+Just run through the prep room or something.
+I'm giving up trying to do my job.
+Have fun or whatever.
+ENDS:
+
+NAME:Klive
+PIC1:Klive_Dialogue_Anger
+There! The crawler! Hit it! (Press [J]).
+ENDS:
+
+NAME:Klive
+PIC1:Klive_Dialogue_Normal
+Oh god, please don't die to the first enemy.
+I don't even think we accounted for someone doing something like that.
+ENDS:
+
+NAME:Klive
+PIC1:Klive_Dialogue_Normal
+Wait a minute, how did you fall down there?
+Hey Theia!
+...
+Theia?
+NOIS:CommsOn
+NAME:P.A. (Theia)
+What is it Klive?
+NAME:Klive
+Are you sure she works?
+She just fell down a whole story and didn't even try to do the whole time travelly thingy.
+At least, that's what the geiger counter is telling me...
+I mean I guess I'm not that familiar with the selection process and all that, but something must be off if she can't even do that, right?
+NAME:P.A. (Theia)
+Did you tell her how to do it?
+NAME:Klive
+Nope, that's step two. We're still on step one.
+NAME:P.A. (Theia)
+...
+You're a moron Klive.
+NOIS:CommsOff
+NAME:
+PIC1:
+(Press E to activate time travel)
+ENDS:
+
+NAME:Klive
+PIC1:Klive_Dialogue_Smug
+Congratulations! You've (barely) completed basic training!
+Now we can move onto step two: Time Travel.
+Hopefully the next few steps wont go as poorly as the last-
+NOIS:DistantExplosion
+PIC1:Klive_Dialogue_Hype
+What was that?
+NOIS:CommsOff
+ENDS:
+
+NOIS:DistantExplosion
+NAME:P.A. (Klive)
+NOIS:CommsOn
+What do you mean? What's going on down there?
+NOIS:DistantExplosion
+NAME:???
+They're coming closer!
+NAME:???
+OH GOD WE'RE ALL GONNA DIE OUT HERE!!!!
+NOIS:DistantExplosion
+NAME:???
+HOW IS IT EVEN POSSIBLE FOR ONE PERSON TO BE DOING THIS?!?!
+NOIS:CommsOff
+NAME:P.A. (Klive)
+Come in? Hello? Can anybody hear me?
+...
+Theia?
+...
+Son of a-
+NOIS:CommsOff
+ENDS:
+
+NOIS:DistantExplosion
+NAME:Klive
+PIC1:Klive_Dialogue_Laugh
+Welp.
+Good news N-0!
+You're going on your first mission!
+Remember, your opponent is a rampaging genetically enhanced monster out on a plot for vengeance and you don't even have five minutes of proper combat training!
+No worries! (Right?)
+Anyways, when you're ready you can jump out that window over there!
+NAME:N-0
+PIC2:Nora_Dialogue_Surprise
+The window!?
+NAME:Klive
+Don't worry, you're only about a hundred stories off the ground. You'll be fine!
+NOIS:CommsOff
+NAME:N-0
+PIC1:
+PIC2:Nora_Dialogue_Down
+...
+NOIS:DistantExplosion
+Guess I'm dying today...
 ENDS:

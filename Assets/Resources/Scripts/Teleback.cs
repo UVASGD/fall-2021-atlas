@@ -2,27 +2,23 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System;
-
 public class Teleback : MonoBehaviour
 {
     //public Camera camera;
-    public Transform[] path;
     public GameObject pathIndicator;
     public int pathSizeFrames = 150;
     public int travelBackSpeedFrames = 5;
     public int backChargeDelta = 2;
-    Pose[] prevPath;
-    bool[] rot;
-    int[] ats;
-    Sprite ret;
+    public int minStackToBack = 10;
+    public int indicatorDistance = 20;
+    public Pose[] prevPath;
     SpriteRenderer sp;
-    bool revInit = false;
     int top = 0;
-    int oldTop = -1;
-    int backCharge = 0;
-    int curStackSize;
-    bool backCharged = false;
+    public int backCharge = 0;
+    public int curStackSize = 0;
+    public bool backCharged = false;
     Rigidbody2D rb2d;
+    
     //Vector2 camSize;
     // Start is called before the first frame update
 
@@ -31,23 +27,20 @@ public class Teleback : MonoBehaviour
         rb2d = GetComponent<Rigidbody2D>();
         //camSize = camera.v;
         prevPath = new Pose[pathSizeFrames];
-        rot = new bool[pathSizeFrames];
-        ats = new int[path.Length];
         sp = GetComponent<SpriteRenderer>();
     }
 
     // Update is called once per frame
     void Update()
     {
-        //print("StackSize " + curStackSize);
-        if (!backCharged)
+        if (!backCharged) //Not moving backward
         {
-            if (Input.GetKey(KeyCode.E))
+            if (Input.GetKey(KeyCode.E) && curStackSize > minStackToBack) //charge backwards
             {
-                rb2d.constraints = RigidbodyConstraints2D.FreezeAll;
-                backCharged = Input.GetKeyUp(KeyCode.E) || backCharge >= curStackSize;
+                backCharged = Input.GetKeyUp(KeyCode.E) || backCharge >= curStackSize; 
                 for (int i = 0; i < backChargeDelta && !backCharged; i++)
                 {
+                    rb2d.constraints = RigidbodyConstraints2D.FreezeAll;
                     backCharge++;
                     try
                     {
@@ -56,7 +49,6 @@ public class Teleback : MonoBehaviour
                     {
                         Debug.LogError(e.Message);
                         print(prevPath[((top - backCharge) + pathSizeFrames) % pathSizeFrames]);
-                        print("CHARGE " + backCharge + " TOP " + top + " SIZE "+ curStackSize);
                         
                     }
                     backCharged = Input.GetKeyUp(KeyCode.E) || backCharge >= curStackSize;
@@ -66,8 +58,11 @@ public class Teleback : MonoBehaviour
             }
             else
             {
-
-                oldTop = -1;
+                for (int i = indicatorDistance; i <= curStackSize; i += indicatorDistance)
+                {
+                    int idx = ((top - i ) + pathSizeFrames) % pathSizeFrames;
+                    prevPath[idx].indicator.SetActive(false);
+                }
                 if (prevPath[top] != null)//Destroy top of stack
                 {
                     Destroy(prevPath[top].indicator);
@@ -75,17 +70,19 @@ public class Teleback : MonoBehaviour
                 }
                 prevPath[top] = new Pose(transform.position);
                 curStackSize += 1;
-
+                sp.color = new Color(1, 1, 1, 1);
                 prevPath[top].indicator = Instantiate(pathIndicator, transform.position, Quaternion.identity);//add to top of stack
                 SpriteRenderer sp2 = prevPath[top].indicator.GetComponent<SpriteRenderer>();
                 sp2.sprite = sp.sprite;
                 sp2.flipX = sp.flipX;
                 sp2.color = new Color(1,1,1,.3F);
                 
-
-                
-
                 top = (top + 1) % pathSizeFrames;//increment top
+                for (int i = indicatorDistance; i <= curStackSize; i += indicatorDistance)
+                {
+                    int idx = ((top - i) + pathSizeFrames) % pathSizeFrames;
+                    prevPath[idx].indicator.SetActive(true);
+                }
 
             }
             backCharged = Input.GetKeyUp(KeyCode.E) || backCharge >= curStackSize;
@@ -93,48 +90,31 @@ public class Teleback : MonoBehaviour
         else 
         {
             
-            //camera.sensorSize = 0.49F*camSize;
-            if (!revInit)
+            //move back travelBackSpeedFrames per frame
+            for (int i = 0; i < travelBackSpeedFrames && backCharge > 0; i++)
             {
-                for (int i = 0; i < path.Length; i++)
-                    ats[i] = (top + 1 + i * 30) % pathSizeFrames;
-            }
-            revInit = true;
-            if (oldTop == -1)
-            {
-                oldTop = top;
-                top = (top - 1 + pathSizeFrames) % pathSizeFrames;
-
-            }
-            if (prevPath[top] != null)
-            {
-                this.transform.position = prevPath[top].position;
-                for (int i = 0; i < travelBackSpeedFrames && top != oldTop; i++)
-                {
-                    if (prevPath[top] != null && backCharge > 0)
-                    {
-                        Destroy(prevPath[top].indicator);
-                        //sp.sprite = prevPath[top].GetComponent<SpriteRenderer>().;
-
-                        prevPath[top] = null;
-                        top = (top - 1 + pathSizeFrames) % pathSizeFrames;
-                        curStackSize--;
-                        backCharge--;
-                    }
-                }
-
+                top = ((top - 1) + pathSizeFrames) % pathSizeFrames;
+                transform.position = prevPath[top].position;
+                SpriteRenderer sp2 = prevPath[top].indicator.GetComponent<SpriteRenderer>();
+                sp.sprite = sp2.sprite;
+                sp.flipX = sp2.flipX;
+                sp.color = sp2.color;
+                Destroy(prevPath[top].indicator);
+                prevPath[top] = null;
+                backCharge--;
                 
-                if (backCharge <= 0)
-                {
-                    rb2d.constraints = RigidbodyConstraints2D.FreezeRotation;
+                curStackSize--; 
+            }
 
-                    backCharged = false;
-                }
+            if (backCharge == 0)
+            {
+                backCharged = false;
+                rb2d.constraints = RigidbodyConstraints2D.FreezeRotation;
             }
         }
     }
 }
-class Pose
+public class Pose
 {
     public GameObject indicator;
     public Vector3 position;
