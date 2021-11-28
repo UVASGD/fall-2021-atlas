@@ -42,6 +42,9 @@ public class Movement : MonoBehaviour
     [SerializeField] private LayerMask walls;
     SpriteRenderer spriteRenderer;
 
+    //this is the number of frames until the horizontal speed cap is enforced (when it's 0, speed is capped)
+    private int framesUntilHorizontalCap = 0;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -53,6 +56,7 @@ public class Movement : MonoBehaviour
         rb.freezeRotation = true;
         Camera.main.GetComponent<AppManager>().follow = transform;
         Camera.main.SendMessage("setBounds");
+        framesUntilHorizontalCap = 0;
     }
    
     // Update is called once per frame
@@ -212,9 +216,16 @@ public class Movement : MonoBehaviour
                 dashTimer--;
             }
         }
+
         // Max Velocity Check
+
+        if(framesUntilHorizontalCap > 0)
+        {
+            framesUntilHorizontalCap--;
+        }
+
         float xSpeed = rb.velocity.x;
-        if (Mathf.Abs(xSpeed) > maxWalkSpeed && !dashing)
+        if (Mathf.Abs(xSpeed) > maxWalkSpeed && !dashing && (framesUntilHorizontalCap<1))
         {
             if (xSpeed > 0)
             {
@@ -304,5 +315,24 @@ public class Movement : MonoBehaviour
         Debug.DrawRay(cl.bounds.center, Vector2.left * (cl.bounds.extents.x + 0.3F), draw);
         return checker.collider != null;
     }
-       
+    
+    // Remove the cap on horizontal speed for a supplied number of frames
+    public void removeHorizonatalSpeedCapForFrames(int frames)
+    {
+        if (frames > framesUntilHorizontalCap)
+        {
+            framesUntilHorizontalCap = frames;
+        }
+    }
+
+    public void cancelDashEarly()
+    {
+        if (dashing)
+        {
+            dashing = false;
+            rb.velocity = Vector2.zero;
+            rb.gravityScale = 5;
+            dashTimer = 0;
+        }
+    }
 }
