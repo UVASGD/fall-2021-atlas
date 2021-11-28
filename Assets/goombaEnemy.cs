@@ -12,10 +12,12 @@ public class goombaEnemy : MonoBehaviour, IDamageable
     public float speed = 1.0f;
     private float sightDistanceToWall = 1.0f;
     private Rigidbody2D rb;
+    private SpriteRenderer sr;
     private bool colliding = false;
     public bool startFacingRight = true;
     void Start()
     {
+        sr = GetComponent<SpriteRenderer>();
         print(maxHealth);
         currentHealth = maxHealth;
         rb = GetComponent<Rigidbody2D>();
@@ -78,7 +80,10 @@ public class goombaEnemy : MonoBehaviour, IDamageable
     void OnTriggerStay2D(Collider2D coll)
     {
         OnTriggerEnter2D(coll);
-        speed *= -1;
+    }
+    void OnCollisionEnter2D(Collision2D coll)
+    {
+        sr.flipX = !sr.flipX;
     }
 }
 

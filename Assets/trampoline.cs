@@ -30,6 +30,7 @@ public class trampoline : MonoBehaviour
             Vector2 force2D = force;
             force2D += (Vector2)forceDirection * forceMagnitude; /// total force = playerVelocityInDirectionOfTrampoline + forceMagnitude
             rb.AddForce(force2D, ForceMode2D.Impulse);
+
         }else if(collision.gameObject.tag == "Enemy")
         {
             Rigidbody2D rb = collision.gameObject.GetComponent<Rigidbody2D>();
@@ -40,5 +41,6 @@ public class trampoline : MonoBehaviour
             rb.AddForce(force2D, ForceMode2D.Impulse);
         }
         ps.Play();
+        AudioManager.PlaySound("Trampoline");
     }
 }

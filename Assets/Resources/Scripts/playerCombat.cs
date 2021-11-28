@@ -39,6 +39,7 @@ public class playerCombat : MonoBehaviour
         {
             if (Input.GetKeyDown(KeyCode.J))
             {
+                AudioManager.PlaySound("PlayerAttack");
                 anim.SetTrigger("Attack");
                 Attack();
                 nextAttackTime = Time.time + 1f / attackRate;

@@ -37,6 +37,10 @@ public class Teleback : MonoBehaviour
         {
             if (Input.GetKey(KeyCode.E) && curStackSize > minStackToBack) //charge backwards
             {
+                if (!AudioManager.IsPlaying("TelebackCharge"))
+                {
+                    AudioManager.PlaySound("TelebackCharge");
+                }
                 backCharged = Input.GetKeyUp(KeyCode.E) || backCharge >= curStackSize; 
                 for (int i = 0; i < backChargeDelta && !backCharged; i++)
                 {
@@ -89,7 +93,11 @@ public class Teleback : MonoBehaviour
         }
         else 
         {
-            
+            if (!AudioManager.IsPlaying("TelebackBust"))
+            {
+                AudioManager.PlaySound("TelebackBust");
+                AudioManager.StopSound("TelebackCharge");
+            }
             //move back travelBackSpeedFrames per frame
             for (int i = 0; i < travelBackSpeedFrames && backCharge > 0; i++)
             {

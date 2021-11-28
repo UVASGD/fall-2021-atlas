@@ -8,7 +8,7 @@ public class AudioManager : MonoBehaviour
     static AudioManager audioManager;
     public ClipName[] audioClips;
     Dictionary<string, AudioClip> clipDict = new Dictionary<string, AudioClip>();
-    AudioSource source;
+    private AudioSource source;
     // Start is called before the first frame update
     void Start()
     {
@@ -16,7 +16,7 @@ public class AudioManager : MonoBehaviour
         audioManager = this;
         foreach (ClipName c in audioClips)
         {
-            clipDict.Add(c.name, c.clip);
+            clipDict.Add(c.name.ToLower(), c.clip);
         }
     }
 
@@ -26,14 +26,36 @@ public class AudioManager : MonoBehaviour
         
     }
 
-    void Play(string name)
-    {
-        source.clip = clipDict[name];
-        source.Play();
-    }
+
     public static void PlaySound(string name)
     {
-        audioManager.Play(name);
+        audioManager.source.clip = audioManager.clipDict[name.ToLower()];
+        audioManager.source.Play();
+
+    }
+
+    public static int SoundIdx(string v)
+    {
+        try
+        {
+            return audioManager.clipDict[v.ToLower()].name == audioManager.source.clip.name && audioManager.source.isPlaying ? 0 : -1 ;
+        } catch (Exception e)
+        {
+            print(e.Message);
+            return -1;
+        }
+    }
+    public static bool IsPlaying(string name)
+    {
+        return SoundIdx(name) != -1;
+    }
+    public static void StopSound(string name)
+    {
+        int idx = SoundIdx(name);
+        if (idx != -1)
+        {
+            audioManager.source.Stop();
+        }
     }
 }
 
