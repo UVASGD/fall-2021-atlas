@@ -184,7 +184,7 @@ public class Movement : MonoBehaviour
             dashTimer = dashLength;
             rb.gravityScale = 0;
             rb.velocity = Mathf.Cos(Mathf.Deg2Rad*directionFacing) * new Vector2(dashSpeed, 0);
-            
+            anim.SetTrigger("Dashing");
         }
 
         /**

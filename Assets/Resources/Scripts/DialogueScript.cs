@@ -79,7 +79,7 @@ public class DialogueScript : MonoBehaviour
             if (sp.size.x >= width)
             {
                 sp.size = new Vector2(width, 0.5F);
-                tf.position = new Vector3(tf.parent.position.x, tf.position.y - 3.5F, tf.position.z);
+                tf.position = new Vector3(tf.parent.position.x, tf.position.y - 5F, tf.position.z);
                 growingH = true;
             }
         }
@@ -88,11 +88,11 @@ public class DialogueScript : MonoBehaviour
         if (growingH && sp.size.y < height)
         {
             sp.size = new Vector2(width, (height - 0.5F) / 15 + sp.size.y);
-            tf.position = new Vector3(tf.parent.position.x, tf.parent.position.y + (height - 0.5F) / 2 - (sp.size.y - 0.5F) / 2 - 3.5F, tf.position.z);
+            tf.position = new Vector3(tf.parent.position.x, tf.parent.position.y + (height - 0.5F) / 2 - (sp.size.y - 0.5F) / 2 - 5F, tf.position.z);
             if (sp.size.y >= height)
             {
                 sp.size = new Vector2(width, height);
-                tf.position = new Vector3(tf.parent.position.x, tf.parent.position.y - 3.5F, tf.position.z);
+                tf.position = new Vector3(tf.parent.position.x, tf.parent.position.y - 5F, tf.position.z);
                 reader = 1;
                 checkCase();
             }
@@ -120,7 +120,7 @@ public class DialogueScript : MonoBehaviour
             int tmp = toRead.Length;
             for (int i = 0; i < txtSpeed && reader <= tmp; i++)
             {
-                if (readcnt > 60)
+                if (readcnt > 90)
                 {
                     int cutoff = text.text.LastIndexOf(" ");
                     if (cutoff >= 0)
@@ -159,7 +159,7 @@ public class DialogueScript : MonoBehaviour
     void readDialogue(int rowNum)
     {
         talking = true;
-        tf.position = new Vector3(tf.parent.position.x - (width - 0.5F) / 2, tf.parent.position.y + (height - 0.5F) / 2 - 3.5F, tf.position.z);
+        tf.position = new Vector3(tf.parent.position.x - (width - 0.5F) / 2, tf.parent.position.y + (height - 0.5F) / 2 - 5F, tf.position.z);
         growingW = true;
         sp.size = new Vector2(0.5F, 0.5F);
         spName.color = new Color(1, 1, 1, 1);
@@ -192,7 +192,7 @@ public class DialogueScript : MonoBehaviour
                     talking = false;
                     pic1.sprite = null;
                     pic2.sprite = null;
-                    tfName.position = new Vector3(tfName.parent.position.x - 6.5F, tfName.position.y, tfName.position.z);
+                    tfName.position = new Vector3(tfName.parent.position.x - 9.5F, tfName.position.y, tfName.position.z);
                     finished = true;
                     Time.timeScale = 1;
                     Movement.canMove = true;
@@ -207,12 +207,12 @@ public class DialogueScript : MonoBehaviour
                     if (nametag.text != "")
                     {
                         if (tfName.position.x - tfName.parent.position.x < 0)
-                            tfName.position = new Vector3(tfName.parent.position.x + 6.5F, tfName.position.y, tfName.position.z);
+                            tfName.position = new Vector3(tfName.parent.position.x + 9.5F, tfName.position.y, tfName.position.z);
                         else
-                            tfName.position = new Vector3(tfName.parent.position.x - 6.5F, tfName.position.y, tfName.position.z);
+                            tfName.position = new Vector3(tfName.parent.position.x - 9.5F, tfName.position.y, tfName.position.z);
                     }
                     else
-                        tfName.position = new Vector3(tfName.parent.position.x - 6.5F, tfName.position.y, tfName.position.z);
+                        tfName.position = new Vector3(tfName.parent.position.x - 9.5F, tfName.position.y, tfName.position.z);
                     float col = 100F;
                     if (tfName.position.x - tfName.parent.position.x > 0)
                     {

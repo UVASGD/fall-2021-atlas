@@ -155,11 +155,13 @@ MonoBehaviour:
   RIGHT_BUTTON_CODE: 100
   JUMP_BUTTON_CODE: 32
   maxWalkSpeed: 10
+  dashSpeed: 30
   maxFallSpeed: 25
   jumpBurst: 900
   maxJump: 0.2
   directionFacing: 0
   lookingRight: 1
+  dashLength: 10
   walls:
     serializedVersion: 2
     m_Bits: 64
@@ -175,15 +177,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cde03367ba9b65d4b82d2aa5599d1a8b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  path:
-  - {fileID: 5320333322119244558, guid: 8987ab870da598643bb8aadaffa94295, type: 3}
-  - {fileID: 5320333322119244558, guid: 8987ab870da598643bb8aadaffa94295, type: 3}
-  - {fileID: 5320333322119244558, guid: 8987ab870da598643bb8aadaffa94295, type: 3}
-  - {fileID: 5320333322119244558, guid: 8987ab870da598643bb8aadaffa94295, type: 3}
-  - {fileID: 5320333322119244558, guid: 8987ab870da598643bb8aadaffa94295, type: 3}
   pathIndicator: {fileID: 7161117637647109050, guid: 39338e239faddc44ca7c9a30c2c6c319, type: 3}
   pathSizeFrames: 150
   travelBackSpeedFrames: 5
+  backChargeDelta: 2
+  minStackToBack: 10
+  indicatorDistance: 20
+  backCharge: 0
+  curStackSize: 0
+  backCharged: 0
 --- !u!114 &-998708281366058015
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -13,6 +13,9 @@ public class Teleback : MonoBehaviour
     public int indicatorDistance = 20;
     public Pose[] prevPath;
     SpriteRenderer sp;
+    Rigidbody2D rb;
+    Animator anim;
+    bool rewinding;
     int top = 0;
     public int backCharge = 0;
     public int curStackSize = 0;
@@ -28,6 +31,8 @@ public class Teleback : MonoBehaviour
         //camSize = camera.v;
         prevPath = new Pose[pathSizeFrames];
         sp = GetComponent<SpriteRenderer>();
+        rb = GetComponent<Rigidbody2D>();
+        anim = GetComponent<Animator>();
     }
 
     // Update is called once per frame
@@ -37,6 +42,7 @@ public class Teleback : MonoBehaviour
         {
             if (Input.GetKey(KeyCode.E) && curStackSize > minStackToBack) //charge backwards
             {
+                anim.SetBool("Teleback", true);
                 backCharged = Input.GetKeyUp(KeyCode.E) || backCharge >= curStackSize; 
                 for (int i = 0; i < backChargeDelta && !backCharged; i++)
                 {
@@ -45,6 +51,9 @@ public class Teleback : MonoBehaviour
                     try
                     {
                         prevPath[((top - backCharge) + pathSizeFrames) % pathSizeFrames].indicator.SetActive(true);
+                        if (rewinding)
+                            prevPath[((top - backCharge + 1) + pathSizeFrames) % pathSizeFrames].indicator.SetActive(false);
+                        rewinding = true;
                     } catch (Exception e)
                     {
                         Debug.LogError(e.Message);
@@ -52,9 +61,7 @@ public class Teleback : MonoBehaviour
                         
                     }
                     backCharged = Input.GetKeyUp(KeyCode.E) || backCharge >= curStackSize;
-
                 }
-
             }
             else
             {
@@ -68,20 +75,21 @@ public class Teleback : MonoBehaviour
                     Destroy(prevPath[top].indicator);
                     curStackSize--;
                 }
-                prevPath[top] = new Pose(transform.position);
+                prevPath[top] = new Pose(transform.position, rb.velocity);
                 curStackSize += 1;
                 sp.color = new Color(1, 1, 1, 1);
                 prevPath[top].indicator = Instantiate(pathIndicator, transform.position, Quaternion.identity);//add to top of stack
                 SpriteRenderer sp2 = prevPath[top].indicator.GetComponent<SpriteRenderer>();
                 sp2.sprite = sp.sprite;
                 sp2.flipX = sp.flipX;
-                sp2.color = new Color(1,1,1,.3F);
+                sp2.color = new Color(1,1,1,.2F);
                 
                 top = (top + 1) % pathSizeFrames;//increment top
                 for (int i = indicatorDistance; i <= curStackSize; i += indicatorDistance)
                 {
                     int idx = ((top - i) + pathSizeFrames) % pathSizeFrames;
-                    prevPath[idx].indicator.SetActive(true);
+                    if (Vector3.Distance(prevPath[idx].position, transform.position) > 1)
+                        prevPath[idx].indicator.SetActive(true);
                 }
 
             }
@@ -89,12 +97,15 @@ public class Teleback : MonoBehaviour
         }
         else 
         {
-            
+            rewinding = false;
+            anim.SetBool("Teleback", false);
+
             //move back travelBackSpeedFrames per frame
             for (int i = 0; i < travelBackSpeedFrames && backCharge > 0; i++)
             {
                 top = ((top - 1) + pathSizeFrames) % pathSizeFrames;
                 transform.position = prevPath[top].position;
+                rb.velocity = prevPath[top].velocity;
                 SpriteRenderer sp2 = prevPath[top].indicator.GetComponent<SpriteRenderer>();
                 sp.sprite = sp2.sprite;
                 sp.flipX = sp2.flipX;
@@ -118,9 +129,11 @@ public class Pose
 {
     public GameObject indicator;
     public Vector3 position;
-    public Pose(Vector3 position)
+    public Vector3 velocity;
+    public Pose(Vector3 position, Vector3 velocity)
     {
         this.position = position;
+        this.velocity = velocity;
     }
     
 }

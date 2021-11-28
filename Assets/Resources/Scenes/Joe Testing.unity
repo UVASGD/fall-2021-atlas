@@ -3326,7 +3326,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6853509794005713200, guid: fe7e58b7abe20964084e143598905458, type: 3}
       propertyPath: activationType
-      value: Door
+      value: Panel
       objectReference: {fileID: 0}
     - target: {fileID: 6853509794005713201, guid: fe7e58b7abe20964084e143598905458, type: 3}
       propertyPath: m_Size.x
