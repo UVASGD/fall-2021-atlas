@@ -15,7 +15,7 @@ public class Button : MonoBehaviour
     public int timer;
     private bool playerOn = false;
     public int timeToUp = 50;
-
+    bool canClick = true;
     void Start()
     {
 
@@ -31,9 +31,15 @@ public class Button : MonoBehaviour
         {
             activated = false;
             rb2d.velocity = Vector2.zero;
+
         }
         else if (trans.position.y <= yGoal && playerOn) {
             activated = true;
+            if (canClick)
+            {
+                AudioManager.PlaySound("ButtonDown");
+                canClick = false;
+            }
 
             timer = timeToUp;
             
@@ -45,6 +51,7 @@ public class Button : MonoBehaviour
         }
         else if (trans.position.y < yStart)
         {
+            canClick = true;
             rb2d.constraints = RigidbodyConstraints2D.FreezeRotation | RigidbodyConstraints2D.FreezePositionX;
             rb2d.AddForce(Vector2.up * upReturnVelocity);
         } 

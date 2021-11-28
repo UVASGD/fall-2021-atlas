@@ -58,6 +58,7 @@ public class Movement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+
         bool upButton = Input.GetKey(UP_BUTTON_CODE), 
             downButton = Input.GetKey(DOWN_BUTTON_CODE), 
             leftButton = Input.GetKey(LEFT_BUTTON_CODE), 
@@ -126,7 +127,6 @@ public class Movement : MonoBehaviour
                 jumping = false;
                 rb.velocity = new Vector2(rb.velocity.x, rb.velocity.y / 1.75F);
             }
-
 
             if (leftButton && rightButton)
             {

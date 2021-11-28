@@ -29,7 +29,7 @@ public class slashGraphic : MonoBehaviour
         {
             try
             {
-                collision.gameObject.SendMessage("TakeDamage", 30);
+                collision.gameObject.SendMessage("TakeDamage", 15);
             }
             catch
             {
