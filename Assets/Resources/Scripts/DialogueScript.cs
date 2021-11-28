@@ -12,8 +12,10 @@ public class DialogueScript : MonoBehaviour
     public SpriteRenderer pic1;
     public SpriteRenderer pic2;
     public SpriteRenderer screenBlock;
+    public AudioSource song;
     public GameObject nameBox;
     public GameObject canvas;
+    public GameObject contPrompt;
     public int txtSpeed;
 
     private SpriteRenderer sp;
@@ -28,13 +30,13 @@ public class DialogueScript : MonoBehaviour
     private int at;
     private bool growingH;
     private bool growingW;
-    private string path;
     private string[] script;
     private string toRead;
     private int reader;
     private int readcnt;
     private bool talking;
     private bool sounding;
+    private int waitTime;
 
     // Start is called before the first frame update
     void Start()
@@ -57,8 +59,7 @@ public class DialogueScript : MonoBehaviour
         width = sp.size.x;
         sp.size = new Vector2(0, 0);
         spName.color = new Color(1, 1, 1, 0);
-        path = "Assets/Resources/script.txt";
-        script = File.ReadAllLines(path);
+        script = File.ReadAllLines("Assets/Resources/script.txt");
         at = -1;
 
     }
@@ -78,7 +79,7 @@ public class DialogueScript : MonoBehaviour
             if (sp.size.x >= width)
             {
                 sp.size = new Vector2(width, 0.5F);
-                tf.position = new Vector3(tf.parent.position.x, tf.position.y - 3.5F, tf.position.z);
+                tf.position = new Vector3(tf.parent.position.x, tf.position.y - 5F, tf.position.z);
                 growingH = true;
             }
         }
@@ -87,11 +88,11 @@ public class DialogueScript : MonoBehaviour
         if (growingH && sp.size.y < height)
         {
             sp.size = new Vector2(width, (height - 0.5F) / 15 + sp.size.y);
-            tf.position = new Vector3(tf.parent.position.x, tf.parent.position.y + (height - 0.5F) / 2 - (sp.size.y - 0.5F) / 2 - 3.5F, tf.position.z);
+            tf.position = new Vector3(tf.parent.position.x, tf.parent.position.y + (height - 0.5F) / 2 - (sp.size.y - 0.5F) / 2 - 5F, tf.position.z);
             if (sp.size.y >= height)
             {
                 sp.size = new Vector2(width, height);
-                tf.position = new Vector3(tf.parent.position.x, tf.parent.position.y - 3.5F, tf.position.z);
+                tf.position = new Vector3(tf.parent.position.x, tf.parent.position.y - 5F, tf.position.z);
                 reader = 1;
                 checkCase();
             }
@@ -104,14 +105,22 @@ public class DialogueScript : MonoBehaviour
             checkCase();
         }
 
+        // Wait Time Check
+        if(waitTime > 0)
+        {
+            waitTime--;
+            if(waitTime == 0)
+                checkCase();
+        }
+
 
         // Autoscroll Dialogue
-        if (sp.size.y == height && reader <= toRead.Length && !sounding)
+        if (sp.size.y == height && reader <= toRead.Length && !sounding && waitTime == 0)
         {
             int tmp = toRead.Length;
             for (int i = 0; i < txtSpeed && reader <= tmp; i++)
             {
-                if (readcnt > 60)
+                if (readcnt > 90)
                 {
                     int cutoff = text.text.LastIndexOf(" ");
                     if (cutoff >= 0)
@@ -129,9 +138,14 @@ public class DialogueScript : MonoBehaviour
                 tick.Play();
         }
 
+        if (sp.size.y == height && reader > toRead.Length)
+            contPrompt.SetActive(true);
+
         // Next Dialogue Line
         if (Input.GetKeyDown(KeyCode.Return) && sp.size.y == height && reader > toRead.Length)
         {
+            contPrompt.SetActive(false);
+
             at++;
             toRead = script[at];
 
@@ -145,7 +159,7 @@ public class DialogueScript : MonoBehaviour
     void readDialogue(int rowNum)
     {
         talking = true;
-        tf.position = new Vector3(tf.parent.position.x - (width - 0.5F) / 2, tf.parent.position.y + (height - 0.5F) / 2 - 3.5F, tf.position.z);
+        tf.position = new Vector3(tf.parent.position.x - (width - 0.5F) / 2, tf.parent.position.y + (height - 0.5F) / 2 - 5F, tf.position.z);
         growingW = true;
         sp.size = new Vector2(0.5F, 0.5F);
         spName.color = new Color(1, 1, 1, 1);
@@ -162,9 +176,8 @@ public class DialogueScript : MonoBehaviour
     {
         // Switch Case to check what the next line wants
         bool finished = false;
-        while (toRead.Length >= 4 && !finished)
+        while (toRead.Length >= 5 && !finished)
         {
-            Debug.Log(toRead);
             switch (toRead.Substring(0, 5))
             {
                 case "ENDS:":
@@ -175,10 +188,11 @@ public class DialogueScript : MonoBehaviour
                     nametag.text = "";
                     spName.color = new Color(255, 255, 255, 0);
                     canvas.SetActive(true);
+                    nameBox.SetActive(false);
                     talking = false;
                     pic1.sprite = null;
                     pic2.sprite = null;
-                    tfName.position = new Vector3(tfName.parent.position.x - 6.5F, tfName.position.y, tfName.position.z);
+                    tfName.position = new Vector3(tfName.parent.position.x - 9.5F, tfName.position.y, tfName.position.z);
                     finished = true;
                     Time.timeScale = 1;
                     Movement.canMove = true;
@@ -193,10 +207,12 @@ public class DialogueScript : MonoBehaviour
                     if (nametag.text != "")
                     {
                         if (tfName.position.x - tfName.parent.position.x < 0)
-                            tfName.position = new Vector3(tfName.parent.position.x + 6.5F, tfName.position.y, tfName.position.z);
+                            tfName.position = new Vector3(tfName.parent.position.x + 9.5F, tfName.position.y, tfName.position.z);
                         else
-                            tfName.position = new Vector3(tfName.parent.position.x - 6.5F, tfName.position.y, tfName.position.z);
+                            tfName.position = new Vector3(tfName.parent.position.x - 9.5F, tfName.position.y, tfName.position.z);
                     }
+                    else
+                        tfName.position = new Vector3(tfName.parent.position.x - 9.5F, tfName.position.y, tfName.position.z);
                     float col = 100F;
                     if (tfName.position.x - tfName.parent.position.x > 0)
                     {
@@ -229,6 +245,23 @@ public class DialogueScript : MonoBehaviour
                 case "FLTR:":
                     string[] colors = toRead.Substring(5).Split(',');
                     screenBlock.color = new Color(int.Parse(colors[0]) / 255F, int.Parse(colors[1]) / 255F, int.Parse(colors[2]) / 255F, float.Parse(colors[3]));
+                    break;
+                case "SONG:":
+                    string[] command = toRead.Substring(5).Split(',');
+                    song.clip = Resources.Load<AudioClip>("Sounds/" + command[1]);
+                    if (command[0] == "Play")
+                        song.Play();
+                    else
+                        song.Stop();
+                    break;
+                case "WAIT:":
+                    waitTime = (int) float.Parse(toRead.Substring(5)) * 60;
+                    at++;
+                    toRead = script[at];
+                    finished = true;
+                    break;
+                case "EMPT:":
+                    text.text = "";
                     break;
                 default:
                     finished = true;

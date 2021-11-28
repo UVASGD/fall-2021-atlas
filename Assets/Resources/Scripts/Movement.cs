@@ -17,6 +17,7 @@ public class Movement : MonoBehaviour
     public KeyCode UP_BUTTON_CODE = KeyCode.W, DOWN_BUTTON_CODE = KeyCode.S, LEFT_BUTTON_CODE = KeyCode.A, RIGHT_BUTTON_CODE = KeyCode.D, JUMP_BUTTON_CODE = KeyCode.Space;
 
     public int maxWalkSpeed;
+    public float dashSpeed;
     public int maxFallSpeed;
     public float jumpBurst;
     public float maxJump;
@@ -27,11 +28,11 @@ public class Movement : MonoBehaviour
    
     private Vector3 respawnPos;
     private const int walkAccel = 100;
-    private const int dashLength = 10;
+    public int dashLength = 10;
     private int dashTimer;
     private bool dashing;
     private Rigidbody2D rb;
-    private BoxCollider2D cl;
+    private Collider2D cl;
     private Animator anim;
     private bool jumping = true;
     private float startJump;
@@ -47,10 +48,9 @@ public class Movement : MonoBehaviour
         spriteRenderer = GetComponent<SpriteRenderer>();
         respawnPos = new Vector3(transform.position.x, transform.position.y, transform.position.z);
         rb = GetComponent<Rigidbody2D>();
-        cl = GetComponent<BoxCollider2D>();
+        cl = GetComponent<Collider2D>();
         anim = GetComponent<Animator>();
         rb.freezeRotation = true;
-        this.gameObject.layer = 7;
         Camera.main.GetComponent<AppManager>().follow = transform;
         Camera.main.SendMessage("setBounds");
     }
@@ -95,7 +95,6 @@ public class Movement : MonoBehaviour
         {
             lookingRight = false;
         }
-
         if (DialogueScript.canTalk && canMove)
         {
             spriteRenderer.flipX = !lookingRight;
@@ -184,9 +183,8 @@ public class Movement : MonoBehaviour
             dashing = true;
             dashTimer = dashLength;
             rb.gravityScale = 0;
-            rb.velocity = new Vector2(0, 0);
-            rb.velocity = Mathf.Sin(Mathf.Deg2Rad*directionFacing) * new Vector2(maxWalkSpeed * 2F, 0);
-            
+            rb.velocity = Mathf.Cos(Mathf.Deg2Rad*directionFacing) * new Vector2(dashSpeed, 0);
+            anim.SetTrigger("Dashing");
         }
 
         /**
@@ -204,10 +202,13 @@ public class Movement : MonoBehaviour
             if (dashTimer == 0)
             {
                 dashing = false;
+                rb.velocity = Vector2.zero;
+
                 rb.gravityScale = 5;
             }
             else
             {
+                rb.velocity = Mathf.Cos(Mathf.Deg2Rad * directionFacing) * new Vector2(dashSpeed, 0);
                 dashTimer--;
             }
         }

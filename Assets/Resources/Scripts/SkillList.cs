@@ -9,10 +9,15 @@ public class SkillList : MonoBehaviour
 
     public int size = 5;
 
+    public Transform playerTransform;
+
     int index = 0;
 
     bool isPaused = false;
-   
+
+    bool timeBombActive = false;
+
+    public GameObject timeBombPrefab;
 
 
     void Start()
@@ -22,6 +27,9 @@ public class SkillList : MonoBehaviour
         skillList.Add("gun");
         skillList.Add("sword");
         skillList.Add("shoe");
+
+        setSkill();
+
     }
     // Update is called once per frame
     void Update()
@@ -29,24 +37,34 @@ public class SkillList : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.LeftControl) || Input.GetKeyUp(KeyCode.LeftControl))
         {
             pause();
-            isPaused = true;
         }
         if(Input.GetKey(KeyCode.LeftControl))
         { 
             if (Input.GetKeyDown(KeyCode.W) && index < size - 1)
             {
                 index++;
+                setSkill();
+               
                 Debug.Log(skillList[index]);
             }
 
             if (Input.GetKeyDown(KeyCode.S) && index > 0)
             {
                 index--;
+                setSkill();
+               
                 Debug.Log(skillList[index]);
             }
         }
- 
-        
+
+        if (timeBombActive && !isPaused)
+        {
+            if (Input.GetKeyDown(KeyCode.K))
+            {
+                Instantiate(timeBombPrefab, playerTransform.position, playerTransform.rotation);
+                Debug.Log("bomb set");
+            }
+        }
 
     }
 
@@ -54,9 +72,9 @@ public class SkillList : MonoBehaviour
     {
         if (!isPaused)
         {
+            isPaused = true;
             Time.timeScale = 0f;
             Movement.canMove = false;
-            
         }
 
         if (isPaused)
@@ -67,4 +85,18 @@ public class SkillList : MonoBehaviour
         }
         
     }
+
+    void setSkill()
+    {
+        switch(index)
+        {
+            case 0: timeBombActive = true;
+                    break;
+            case 1: timeBombActive = false;
+                     break;
+
+        }
+    }
+
+    
 }

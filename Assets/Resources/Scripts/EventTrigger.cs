@@ -21,7 +21,7 @@ public class EventTrigger : MonoBehaviour
 
     void Update()
     {
-        if(activated && time > 0 && activationType == "Door")
+        if(activated && time > 0 && activationType == "Panel")
         {
             obj.position = new Vector3(obj.position.x, obj.position.y + variation / 60);
             time--;
@@ -44,9 +44,15 @@ public class EventTrigger : MonoBehaviour
             case "Speech":
                 activator.SendMessage("readDialogue", (int)variation);
                 break;
-            case "Door":
+            case "Panel":
                 activated = true;
                 time = 60;
+                break;
+            case "Trigger":
+                if(variation != 0)
+                    activator.GetComponent<EventTrigger>().canActivate = true;
+                else
+                    activator.GetComponent<EventTrigger>().canActivate = false;
                 break;
         }
     }

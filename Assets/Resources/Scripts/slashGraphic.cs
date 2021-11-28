@@ -25,13 +25,16 @@ public class slashGraphic : MonoBehaviour
     }
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        try
+        if (collision.tag == "Enemy")
         {
-            collision.gameObject.SendMessage("TakeDamage", 30);
-        }
-        catch
-        {
+            try
+            {
+                collision.gameObject.SendMessage("TakeDamage", 30);
+            }
+            catch
+            {
 
+            }
         }
         //collision.gameObject.SendMessage("TakeDamage", 30);
     }

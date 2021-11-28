@@ -96,6 +96,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6cd07a19af1a0e3428e3e3513e715d02, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  mainPrefab: {fileID: 1646086073564664345, guid: bd69f54cd7d8c514097796e6dab509bd, type: 3}
+  optionsPrefab: {fileID: 3665868026107463656, guid: 0dd53fc02711e4040bdfb88f3eff7287, type: 3}
+  pausePrefab: {fileID: 0}
   menuOptions:
   - Start
   - Options
