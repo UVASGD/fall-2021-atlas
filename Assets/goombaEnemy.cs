@@ -31,12 +31,14 @@ public class goombaEnemy : MonoBehaviour, IDamageable
     void FixedUpdate()
     {
         rb.velocity = new Vector2(speed, rb.velocity.y);    //set velocity
-        colliding = Physics2D.Linecast(new Vector2(transform.position.x + sightDistanceToWall-0.01f, transform.position.y), new Vector2(transform.position.x + sightDistanceToWall, transform.position.y), LayerMask.GetMask("Wall","Enemy Layer","Player"));
-        if (colliding)  // turn around if you hit a wall or player
-        {
-            speed = -1f * speed;
-            sightDistanceToWall = -1f * sightDistanceToWall;
-        }
+        //colliding = Physics2D.Linecast(new Vector2(transform.position.x + Mathf.Sign(speed)*(sightDistanceToWall-0.01f), transform.position.y), 
+        //new Vector2(transform.position.x + sightDistanceToWall*Mathf.Sign(speed), transform.position.y), //changed it so it looks in the direction it's facing
+        //LayerMask.GetMask("Wall","Enemy Layer","Player"));
+        // if (colliding)  // turn around if you hit a wall or player
+        // {
+        //     speed = -1f * speed;
+        //     sightDistanceToWall = -1f * sightDistanceToWall;
+        // }
 
     }
 
@@ -67,6 +69,9 @@ public class goombaEnemy : MonoBehaviour, IDamageable
         {
             pc.getHit(attackDamage, transform.position);
         }
+    }
+    void OnCollisionEnter2D(Collision2D coll){
+        speed *= -1;
     }
 }
 
