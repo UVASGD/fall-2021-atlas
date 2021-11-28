@@ -3310,8 +3310,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   audioClips:
-  - clip: {fileID: 8300000, guid: ec6923c4d5b5c7c42a2cfd8b3175650c, type: 3}
-    name: Woosh
   - clip: {fileID: 8300000, guid: c512ad90edad8454781b883f5dc3ba48, type: 3}
     name: PlayerHurt
   - clip: {fileID: 8300000, guid: c512ad90edad8454781b883f5dc3ba48, type: 3}
@@ -3324,6 +3322,14 @@ MonoBehaviour:
     name: ButtonDown
   - clip: {fileID: 8300000, guid: 77785ea4e04bacc4c88e141f10f2f685, type: 3}
     name: ButtonUp
+  - clip: {fileID: 8300000, guid: 0ca694c54f022c547ba5b83086fd7dc7, type: 3}
+    name: PlayerAttack
+  - clip: {fileID: 8300000, guid: bc8994eb59106064b8c21c04b13310e1, type: 3}
+    name: Trampoline
+  - clip: {fileID: 8300000, guid: 3cc218fe01abbb34a889e6bc3b4aec94, type: 3}
+    name: TelebackCharge
+  - clip: {fileID: 8300000, guid: 054fa5df46b8d1c4291e0002df4e3387, type: 3}
+    name: TelebackBust
 --- !u!114 &1821515206 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 6461387080784181266, guid: ef3cc0c1980e6e14089a7ae61cb4d142, type: 3}
@@ -4032,6 +4038,10 @@ PrefabInstance:
       value: Player
       objectReference: {fileID: 0}
     - target: {fileID: 3153496238293602230, guid: 345becfeed7a03d42ba8e56107dac0e2, type: 3}
+      propertyPath: m_Material
+      value: 
+      objectReference: {fileID: 6200000, guid: b4d546d06c5a9f74698caac607acd103, type: 2}
+    - target: {fileID: 3153496238293602231, guid: 345becfeed7a03d42ba8e56107dac0e2, type: 3}
       propertyPath: m_Material
       value: 
       objectReference: {fileID: 6200000, guid: b4d546d06c5a9f74698caac607acd103, type: 2}
