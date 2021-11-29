@@ -29,6 +29,10 @@ public class Button : MonoBehaviour
 
         if (trans.position.y >= yStart)
         {
+            if (activated)
+            {
+                AudioManager.PlaySound("ButtonUp");
+            }
             activated = false;
             rb2d.velocity = Vector2.zero;
 

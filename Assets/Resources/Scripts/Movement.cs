@@ -96,6 +96,14 @@ public class Movement : MonoBehaviour
         {
             lookingRight = false;
         }
+        if (Input.GetKeyUp(LEFT_BUTTON_CODE) && Input.GetKey(RIGHT_BUTTON_CODE))
+        {
+            lookingRight = true;
+        }
+        if (Input.GetKeyUp(RIGHT_BUTTON_CODE) && Input.GetKey(LEFT_BUTTON_CODE))
+        {
+            lookingRight = false;
+        }
         if (DialogueScript.canTalk && canMove)
         {
             spriteRenderer.flipX = !lookingRight;
@@ -180,6 +188,7 @@ public class Movement : MonoBehaviour
          */
         if (Input.GetKeyDown(KeyCode.LeftShift) && !dashing)
         {
+            AudioManager.PlaySound("Dash");
             dashing = true;
             dashTimer = dashLength;
             rb.gravityScale = 0;

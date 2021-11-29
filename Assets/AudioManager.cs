@@ -8,11 +8,11 @@ public class AudioManager : MonoBehaviour
     static AudioManager audioManager;
     public ClipName[] audioClips;
     Dictionary<string, AudioClip> clipDict = new Dictionary<string, AudioClip>();
-    private AudioSource source;
+    private AudioSource[] sources;
     // Start is called before the first frame update
     void Start()
     {
-        source = GetComponent<AudioSource>();
+        sources = GetComponentsInChildren<AudioSource>();
         audioManager = this;
         foreach (ClipName c in audioClips)
         {
@@ -25,25 +25,43 @@ public class AudioManager : MonoBehaviour
     {
         
     }
-
+    private static AudioSource GetOpenSource()
+    {
+        for (int i = 0; i < audioManager.sources.Length; i++)
+        {
+            if (!audioManager.sources[i].isPlaying)
+            {
+                return audioManager.sources[i];
+            }
+        }
+        return null;
+    }
 
     public static void PlaySound(string name)
     {
-        audioManager.source.clip = audioManager.clipDict[name.ToLower()];
-        audioManager.source.Play();
+        AudioSource freeSource = GetOpenSource();
+        freeSource.clip = audioManager.clipDict[name.ToLower()];
+        freeSource.Play();
 
     }
 
-    public static int SoundIdx(string v)
+    private static int SoundIdx(string v)
     {
         try
         {
-            return audioManager.clipDict[v.ToLower()].name == audioManager.source.clip.name && audioManager.source.isPlaying ? 0 : -1 ;
+
+            for (int i = 0; i < audioManager.sources.Length; i++)
+            {
+                if (audioManager.sources[i].isPlaying && audioManager.sources[i].clip != null && audioManager.sources[i].clip.name.ToLower() == v.ToLower())
+                {
+                    return i;
+                }
+            }
         } catch (Exception e)
         {
             print(e.Message);
-            return -1;
         }
+        return -1;
     }
     public static bool IsPlaying(string name)
     {
@@ -54,7 +72,7 @@ public class AudioManager : MonoBehaviour
         int idx = SoundIdx(name);
         if (idx != -1)
         {
-            audioManager.source.Stop();
+            audioManager.sources[idx].Stop();
         }
     }
 }

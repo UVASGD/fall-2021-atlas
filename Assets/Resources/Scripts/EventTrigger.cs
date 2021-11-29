@@ -8,7 +8,7 @@ public class EventTrigger : MonoBehaviour
     public GameObject activator;
     public bool canActivate;
     public float variation;
-
+    public float timeToAct = 60;
     private bool activated;
     private Transform obj;
     private int time;
@@ -23,7 +23,7 @@ public class EventTrigger : MonoBehaviour
     {
         if(activated && time > 0 && activationType == "Panel")
         {
-            obj.position = new Vector3(obj.position.x, obj.position.y + variation / 60);
+            obj.position = new Vector3(obj.position.x, obj.position.y + variation / timeToAct);
             time--;
         }
     }
@@ -46,6 +46,7 @@ public class EventTrigger : MonoBehaviour
                 break;
             case "Panel":
                 activated = true;
+                AudioManager.PlaySound("door");
                 time = 60;
                 break;
             case "Trigger":
