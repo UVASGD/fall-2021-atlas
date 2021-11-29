@@ -30,6 +30,7 @@ public class EventTrigger : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D other)
     {
+        print("activated!!");
         if (canActivate && other.tag == "Player")
         {
             Activate();
