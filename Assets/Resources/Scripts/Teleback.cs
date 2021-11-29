@@ -14,9 +14,10 @@ public class Teleback : MonoBehaviour
     public Pose[] prevPath;
     SpriteRenderer sp;
     int top = 0;
-    public int backCharge = 0;
-    public int curStackSize = 0;
-    public bool backCharged = false;
+    bool playedBustSound = false;
+    private int backCharge = 0;
+    private int curStackSize = 0;
+    private bool backCharged = false;
     Rigidbody2D rb2d;
     
     //Vector2 camSize;
@@ -37,6 +38,7 @@ public class Teleback : MonoBehaviour
         {
             if (Input.GetKey(KeyCode.E) && curStackSize > minStackToBack) //charge backwards
             {
+                playedBustSound = false;
                 if (!AudioManager.IsPlaying("TelebackCharge"))
                 {
                     AudioManager.PlaySound("TelebackCharge");
@@ -93,8 +95,9 @@ public class Teleback : MonoBehaviour
         }
         else 
         {
-            if (!AudioManager.IsPlaying("TelebackBust"))
+            if (!playedBustSound)
             {
+                playedBustSound = true;
                 AudioManager.PlaySound("TelebackBust");
                 AudioManager.StopSound("TelebackCharge");
             }
