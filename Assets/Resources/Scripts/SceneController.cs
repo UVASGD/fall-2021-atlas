@@ -14,8 +14,8 @@ public class SceneController: MonoBehaviour
     {
         {"Menu", "Title Screen" },
         {"Credits", "Credits" },
-        {"Level1", "Grant Testing"} ,
-        {"Level2", "Jimmy Testing" } ,
+        {"Level1", "Level 1 for real 1"} ,
+        {"Level2", "Level 2 Fofo (Level Design Done)" } ,
         {"Level3", "Ian Testing" }
     };
 

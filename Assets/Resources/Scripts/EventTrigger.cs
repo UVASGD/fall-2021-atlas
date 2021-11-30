@@ -56,6 +56,9 @@ public class EventTrigger : MonoBehaviour
                 else
                     activator.GetComponent<EventTrigger>().canActivate = false;
                 break;
+            case "Scene":
+                SceneController.LoadLevel((int)variation);
+                break;
         }
     }
 

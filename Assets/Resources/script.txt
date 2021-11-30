@@ -34,7 +34,6 @@ The distant sounds of war trail behind me.
 I'm lucky to have escaped... Or so I think.
 Just as my mind drifts away.
 Just as...
-.
 EMPT:
 SONG:Stop,RainyMelody
 WAIT:3
@@ -63,6 +62,7 @@ PIC1:Nora_Dialogue_Down
 ...
 PIC1:Nora_Dialogue_Normal
 Where am I?
+SONG:Play,CompletelyLegalSong
 ENDS:
 
 NOIS:buzzer
@@ -259,4 +259,23 @@ PIC2:Nora_Dialogue_Down
 ...
 NOIS:DistantExplosion
 Guess I'm dying today...
+ENDS:
+
+NOIS:Slash
+FLTR:150,10,0,1
+...
+...You Died.
+EMPT:
+NAME:Klive
+PIC1:Klive_Dialogue_Smug
+NOIS:CommsOn
+Good news!
+Time kinda sucks!
+The devs messed up and only had enough to properly integrate a tutorial level.
+So welcome to Portal 3, actually this time.
+Right now, all you're gonna see is a bunch of level designs we have thrown at a wall.
+Most of them play around with some puzzle ideas regarding one core mechanic or another.
+Hope you enjoy.
+NOIS:CommsOff
+FLTR:0,0,0,0
 ENDS:
