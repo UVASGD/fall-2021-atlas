@@ -25,6 +25,8 @@ public class Movement : MonoBehaviour
     public bool lookingRight = true;
     public static bool canMove;
     public static bool grounded;
+    public PhysicsMaterial2D friction;
+    public PhysicsMaterial2D nofriction;
    
     private Vector3 respawnPos;
     private const int walkAccel = 100;
@@ -39,6 +41,7 @@ public class Movement : MonoBehaviour
     private float xRangeMin;
     private float xRangeMax;
     private float minHeight;
+    private int dashNums;
     [SerializeField] private LayerMask walls;
     SpriteRenderer spriteRenderer;
 
@@ -58,6 +61,7 @@ public class Movement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+
         bool upButton = Input.GetKey(UP_BUTTON_CODE), 
             downButton = Input.GetKey(DOWN_BUTTON_CODE), 
             leftButton = Input.GetKey(LEFT_BUTTON_CODE), 
@@ -83,7 +87,11 @@ public class Movement : MonoBehaviour
         {
             anim.SetBool("Fall", false);
             anim.SetBool("Rise", false);
+            dashNums = 1;
+            cl.sharedMaterial = friction;
         }
+        else
+            cl.sharedMaterial = nofriction;
         if (!DialogueScript.canTalk)
             anim.SetBool("Running", false);
 
@@ -92,6 +100,14 @@ public class Movement : MonoBehaviour
             lookingRight = true;
         }
         else if (leftButtonPressed)
+        {
+            lookingRight = false;
+        }
+        if (Input.GetKeyUp(LEFT_BUTTON_CODE) && Input.GetKey(RIGHT_BUTTON_CODE))
+        {
+            lookingRight = true;
+        }
+        if (Input.GetKeyUp(RIGHT_BUTTON_CODE) && Input.GetKey(LEFT_BUTTON_CODE))
         {
             lookingRight = false;
         }
@@ -126,7 +142,6 @@ public class Movement : MonoBehaviour
                 jumping = false;
                 rb.velocity = new Vector2(rb.velocity.x, rb.velocity.y / 1.75F);
             }
-
 
             if (leftButton && rightButton)
             {
@@ -178,13 +193,15 @@ public class Movement : MonoBehaviour
          * Starts timer for dash and sets dashing to true
          * Adds constant value force to player in the direction they are facing
          */
-        if (Input.GetKeyDown(KeyCode.LeftShift) && !dashing)
+        if (dashNums > 0 && Input.GetKeyDown(KeyCode.LeftShift) && !dashing)
         {
+            AudioManager.PlaySound("Dash");
             dashing = true;
             dashTimer = dashLength;
             rb.gravityScale = 0;
             rb.velocity = Mathf.Cos(Mathf.Deg2Rad*directionFacing) * new Vector2(dashSpeed, 0);
             anim.SetTrigger("Dashing");
+            dashNums--;
         }
 
         /**

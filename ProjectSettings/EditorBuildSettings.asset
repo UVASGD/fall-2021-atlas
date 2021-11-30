@@ -9,16 +9,13 @@ EditorBuildSettings:
     path: Assets/Resources/Scenes/Title Screen.unity
     guid: 9ec286012be39714d96ce8a60fcd63e9
   - enabled: 1
-    path: Assets/Resources/Scenes/Ian Testing.unity
-    guid: 2cda990e2423bbf4892e6590ba056729
-  - enabled: 1
-    path: Assets/Resources/Scenes/Grant Testing.unity
-    guid: 97f657f0a02cfde498162ad573ef0c40
-  - enabled: 1
-    path: Assets/Resources/Scenes/Jimmy Testing.unity
-    guid: 822c711e40f961a4eaa575b0de22850a
-  - enabled: 1
     path: Assets/Resources/Scenes/Credits.unity
     guid: 8412ea77d4580c243b3f825eedd47eca
+  - enabled: 1
+    path: Assets/Resources/Scenes/Level 1 for real 1.unity
+    guid: 231188cfb0a43534c85f09e3fa0e9e8c
+  - enabled: 1
+    path: Assets/Resources/Scenes/Level 2 Fofo (Level Design Done).unity
+    guid: 10f63c76370c41c40a204c8433e170e2
   m_configObjects:
     com.unity.input.settings: {fileID: 11400000, guid: d165c9c41f1fcaa4f98bb2ed18b9e380, type: 2}

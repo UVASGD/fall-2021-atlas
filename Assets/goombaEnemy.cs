@@ -5,7 +5,7 @@ using UnityEngine;
 public class goombaEnemy : MonoBehaviour, IDamageable
 {
     // Start is called before the first frame update
-    private float currentHealth;
+    public float currentHealth;
     public float maxHealth = 50;
     public int attackDamage = 25;
     public Collider2D hitbox;
@@ -49,14 +49,18 @@ public class goombaEnemy : MonoBehaviour, IDamageable
         currentHealth -= damage;
 
         //TODO: play hurt animation
-
         if (currentHealth <= 0)
         {
             Die();
+        } else
+        {
+            AudioManager.PlaySound("GoombaDamage");
         }
     }
     void Die()
     {
+
+        AudioManager.PlaySound("GoombaDeath");
         //TODO: play death animation
 
         //Disable the enemy bc it's dead
@@ -72,6 +76,11 @@ public class goombaEnemy : MonoBehaviour, IDamageable
             pc.getHit(attackDamage, transform.position);
         }
     }
+    void OnTriggerStay2D(Collider2D coll)
+    {
+        OnTriggerEnter2D(coll);
+    }
+
     void OnCollisionEnter2D(Collision2D coll){
         speed *= -1;
         sp.flipX = !sp.flipX;

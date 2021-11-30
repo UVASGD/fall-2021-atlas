@@ -8,7 +8,7 @@ public class EventTrigger : MonoBehaviour
     public GameObject activator;
     public bool canActivate;
     public float variation;
-
+    public float timeToAct = 60;
     private bool activated;
     private Transform obj;
     private int time;
@@ -23,13 +23,14 @@ public class EventTrigger : MonoBehaviour
     {
         if(activated && time > 0 && activationType == "Panel")
         {
-            obj.position = new Vector3(obj.position.x, obj.position.y + variation / 60);
+            obj.position = new Vector3(obj.position.x, obj.position.y + variation / timeToAct);
             time--;
         }
     }
 
     void OnTriggerEnter2D(Collider2D other)
     {
+        print("activated!!");
         if (canActivate && other.tag == "Player")
         {
             Activate();
@@ -46,6 +47,7 @@ public class EventTrigger : MonoBehaviour
                 break;
             case "Panel":
                 activated = true;
+                AudioManager.PlaySound("door");
                 time = 60;
                 break;
             case "Trigger":
@@ -53,6 +55,9 @@ public class EventTrigger : MonoBehaviour
                     activator.GetComponent<EventTrigger>().canActivate = true;
                 else
                     activator.GetComponent<EventTrigger>().canActivate = false;
+                break;
+            case "Scene":
+                SceneController.LoadLevel((int)variation);
                 break;
         }
     }

@@ -39,6 +39,7 @@ public class playerCombat : MonoBehaviour
         {
             if (Input.GetKeyDown(KeyCode.J))
             {
+                AudioManager.PlaySound("PlayerAttack");
                 anim.SetTrigger("Attack");
                 Attack();
                 nextAttackTime = Time.time + 1f / attackRate;
@@ -79,10 +80,18 @@ public class playerCombat : MonoBehaviour
         if(currentIFrames < 1)
         {
             health -= damage;
+
             currentIFrames = iFrames;
             if(health <= 0f)
             {
                 Die();
+                AudioManager.PlaySound("PlayerDeath");
+
+            }
+            else
+            {
+                AudioManager.PlaySound("PlayerHurt");
+
             }
         }
         if(source == null)

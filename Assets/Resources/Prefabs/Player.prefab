@@ -158,9 +158,11 @@ MonoBehaviour:
   dashSpeed: 30
   maxFallSpeed: 25
   jumpBurst: 900
-  maxJump: 0.2
+  maxJump: 0.4
   directionFacing: 0
   lookingRight: 1
+  friction: {fileID: 6200000, guid: b4d546d06c5a9f74698caac607acd103, type: 2}
+  nofriction: {fileID: 6200000, guid: 8b055c1cbc1b29949a842f68535b3a11, type: 2}
   dashLength: 10
   walls:
     serializedVersion: 2
@@ -183,9 +185,6 @@ MonoBehaviour:
   backChargeDelta: 2
   minStackToBack: 10
   indicatorDistance: 20
-  backCharge: 0
-  curStackSize: 0
-  backCharged: 0
 --- !u!114 &-998708281366058015
 MonoBehaviour:
   m_ObjectHideFlags: 0

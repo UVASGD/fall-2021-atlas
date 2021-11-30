@@ -46,6 +46,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   col: {fileID: 622432943081085449}
+  hitBackSpeed: 0
+  timer: 60
 --- !u!61 &622432943081085449
 BoxCollider2D:
   m_ObjectHideFlags: 0
