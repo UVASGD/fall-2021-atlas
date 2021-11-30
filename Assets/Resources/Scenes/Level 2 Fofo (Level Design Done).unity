@@ -1103,18 +1103,6 @@ PrefabInstance:
       propertyPath: m_CharacterSize
       value: 1
       objectReference: {fileID: 0}
-    - target: {fileID: 593649910380213639, guid: c67a4eb43e6457e48a5c14558022aa27, type: 3}
-      propertyPath: audioClips.Array.size
-      value: 13
-      objectReference: {fileID: 0}
-    - target: {fileID: 593649910380213639, guid: c67a4eb43e6457e48a5c14558022aa27, type: 3}
-      propertyPath: audioClips.Array.data[12].clip
-      value: 
-      objectReference: {fileID: 8300000, guid: 8359a9222479a7f499ed0ce3bdd3de2a, type: 3}
-    - target: {fileID: 593649910380213639, guid: c67a4eb43e6457e48a5c14558022aa27, type: 3}
-      propertyPath: audioClips.Array.data[12].name
-      value: ButtonTick
-      objectReference: {fileID: 0}
     - target: {fileID: 1569246929243339584, guid: c67a4eb43e6457e48a5c14558022aa27, type: 3}
       propertyPath: Loop
       value: 1
@@ -1577,6 +1565,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   button: {fileID: 2040914347}
+  moveUp: 0
+  framesToMove: 10
+  minY: 0
+  maxY: 0
   action: 0
 --- !u!4 &896589992 stripped
 Transform:
