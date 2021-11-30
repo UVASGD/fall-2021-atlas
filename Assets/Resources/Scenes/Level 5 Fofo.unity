@@ -2739,24 +2739,24 @@ Transform:
   - {fileID: 1917801942}
   - {fileID: 119447592}
   - {fileID: 161579224}
+  - {fileID: 365748726}
   - {fileID: 309666751}
   - {fileID: 1174097716}
   - {fileID: 540706870}
   - {fileID: 139027491}
+  - {fileID: 1330618347}
   - {fileID: 309034536}
   - {fileID: 1825352470}
-  - {fileID: 1330618347}
-  - {fileID: 320838110}
-  - {fileID: 365748726}
-  - {fileID: 916000139}
   - {fileID: 766313329}
-  - {fileID: 911458230}
+  - {fileID: 320838110}
   - {fileID: 417341424}
-  - {fileID: 955323010}
+  - {fileID: 916000139}
   - {fileID: 1439143963}
-  - {fileID: 1034589551}
+  - {fileID: 911458230}
   - {fileID: 1177702161}
   - {fileID: 1381114007}
+  - {fileID: 955323010}
+  - {fileID: 1034589551}
   m_Father: {fileID: 0}
   m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -2874,11 +2874,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8139336358286374614, guid: cc8fe6b47857dab428ed6be7d9a6a9b9, type: 3}
       propertyPath: m_Color.b
-      value: 1
+      value: 0.28450036
       objectReference: {fileID: 0}
     - target: {fileID: 8139336358286374614, guid: cc8fe6b47857dab428ed6be7d9a6a9b9, type: 3}
       propertyPath: m_Color.g
-      value: 0.15384912
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8139336358286374614, guid: cc8fe6b47857dab428ed6be7d9a6a9b9, type: 3}
       propertyPath: m_Color.r
