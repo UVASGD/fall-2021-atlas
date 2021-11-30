@@ -144,6 +144,7 @@ MonoBehaviour:
   activator: {fileID: 1239877495}
   canActivate: 1
   variation: 174
+  timeToAct: 60
 --- !u!4 &23500841 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 8720391782479377086, guid: 8f37f83c1fae2b7469d4d22b58181f13, type: 3}
@@ -1473,10 +1474,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1569246929243339584, guid: c67a4eb43e6457e48a5c14558022aa27, type: 3}
       propertyPath: m_PlayOnAwake
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2586555719944602420, guid: c67a4eb43e6457e48a5c14558022aa27, type: 3}
-      propertyPath: m_BackGroundColor.a
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2586555719944602423, guid: c67a4eb43e6457e48a5c14558022aa27, type: 3}
@@ -5263,10 +5260,6 @@ PrefabInstance:
       propertyPath: slider
       value: 
       objectReference: {fileID: 1821515206}
-    - target: {fileID: 3153496238293602224, guid: 345becfeed7a03d42ba8e56107dac0e2, type: 3}
-      propertyPath: maxJump
-      value: 0.4
-      objectReference: {fileID: 0}
     - target: {fileID: 3153496238293602224, guid: 345becfeed7a03d42ba8e56107dac0e2, type: 3}
       propertyPath: healthBar
       value: 

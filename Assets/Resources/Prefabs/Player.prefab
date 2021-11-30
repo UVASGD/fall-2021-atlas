@@ -185,9 +185,6 @@ MonoBehaviour:
   backChargeDelta: 2
   minStackToBack: 10
   indicatorDistance: 20
-  backCharge: 0
-  curStackSize: 0
-  backCharged: 0
 --- !u!114 &-998708281366058015
 MonoBehaviour:
   m_ObjectHideFlags: 0

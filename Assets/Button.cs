@@ -31,11 +31,12 @@ public class Button : MonoBehaviour
         {
             if (activated)
             {
+                AudioManager.StopSound("ButtonTick");
                 AudioManager.PlaySound("ButtonUp");
             }
             activated = false;
             rb2d.velocity = Vector2.zero;
-
+            
         }
         else if (trans.position.y <= yGoal && playerOn) {
             activated = true;
@@ -50,6 +51,13 @@ public class Button : MonoBehaviour
         }
         if (timer > 0)
         {
+            if (!AudioManager.IsPlaying("ButtonTick"))
+            {
+
+                print("playing button tick 1");
+                AudioManager.PlaySound("ButtonTick");
+            }
+
             rb2d.constraints = RigidbodyConstraints2D.FreezeAll;
             timer--;
         }

@@ -1382,6 +1382,18 @@ PrefabInstance:
       propertyPath: m_CharacterSize
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 593649910380213639, guid: c67a4eb43e6457e48a5c14558022aa27, type: 3}
+      propertyPath: audioClips.Array.size
+      value: 13
+      objectReference: {fileID: 0}
+    - target: {fileID: 593649910380213639, guid: c67a4eb43e6457e48a5c14558022aa27, type: 3}
+      propertyPath: audioClips.Array.data[12].clip
+      value: 
+      objectReference: {fileID: 8300000, guid: 8359a9222479a7f499ed0ce3bdd3de2a, type: 3}
+    - target: {fileID: 593649910380213639, guid: c67a4eb43e6457e48a5c14558022aa27, type: 3}
+      propertyPath: audioClips.Array.data[12].name
+      value: ButtonTick
+      objectReference: {fileID: 0}
     - target: {fileID: 1569246929243339584, guid: c67a4eb43e6457e48a5c14558022aa27, type: 3}
       propertyPath: Loop
       value: 1
@@ -1826,7 +1838,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8720391782479377086, guid: 8f37f83c1fae2b7469d4d22b58181f13, type: 3}
       propertyPath: m_LocalScale.y
-      value: 90.06396
+      value: 187.80138
       objectReference: {fileID: 0}
     - target: {fileID: 8720391782479377086, guid: 8f37f83c1fae2b7469d4d22b58181f13, type: 3}
       propertyPath: m_LocalPosition.x
@@ -1834,7 +1846,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8720391782479377086, guid: 8f37f83c1fae2b7469d4d22b58181f13, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 23.2
+      value: 22.7113
       objectReference: {fileID: 0}
     - target: {fileID: 8720391782479377086, guid: 8f37f83c1fae2b7469d4d22b58181f13, type: 3}
       propertyPath: m_LocalPosition.z
@@ -1875,6 +1887,25 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 8720391782479377086, guid: 8f37f83c1fae2b7469d4d22b58181f13, type: 3}
   m_PrefabInstance: {fileID: 255408318}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &879969093 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8720391782479377058, guid: 8f37f83c1fae2b7469d4d22b58181f13, type: 3}
+  m_PrefabInstance: {fileID: 1083778262}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &879969096
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 879969093}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4b8c47310aa18f2459d21239d6509694, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  button: {fileID: 2040914347}
+  action: 0
 --- !u!4 &896589992 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 8720391782479377086, guid: 8f37f83c1fae2b7469d4d22b58181f13, type: 3}
@@ -2786,6 +2817,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 716553192327337947, guid: cc8fe6b47857dab428ed6be7d9a6a9b9, type: 3}
+      propertyPath: yGoal
+      value: 23.1
+      objectReference: {fileID: 0}
     - target: {fileID: 8139336358286374601, guid: cc8fe6b47857dab428ed6be7d9a6a9b9, type: 3}
       propertyPath: m_Name
       value: Button
@@ -2795,16 +2830,16 @@ PrefabInstance:
       value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 8139336358286374613, guid: cc8fe6b47857dab428ed6be7d9a6a9b9, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 186.27141
+      objectReference: {fileID: 0}
+    - target: {fileID: 8139336358286374613, guid: cc8fe6b47857dab428ed6be7d9a6a9b9, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 54.88466
+      value: 54.93
       objectReference: {fileID: 0}
     - target: {fileID: 8139336358286374613, guid: cc8fe6b47857dab428ed6be7d9a6a9b9, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 24.00361
-      objectReference: {fileID: 0}
-    - target: {fileID: 8139336358286374613, guid: cc8fe6b47857dab428ed6be7d9a6a9b9, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: -1
+      value: 23.65
       objectReference: {fileID: 0}
     - target: {fileID: 8139336358286374613, guid: cc8fe6b47857dab428ed6be7d9a6a9b9, type: 3}
       propertyPath: m_LocalRotation.w
@@ -3954,6 +3989,17 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 8720391782479377086, guid: 8f37f83c1fae2b7469d4d22b58181f13, type: 3}
   m_PrefabInstance: {fileID: 2009507554}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &2040914347 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 716553192327337947, guid: cc8fe6b47857dab428ed6be7d9a6a9b9, type: 3}
+  m_PrefabInstance: {fileID: 1325256361}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 09fdc23434d85f14dac308576ed5bfd6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!4 &2057440481 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6853509794005713202, guid: fe7e58b7abe20964084e143598905458, type: 3}
@@ -4080,25 +4126,13 @@ PrefabInstance:
       propertyPath: hitForce
       value: 20
       objectReference: {fileID: 0}
-    - target: {fileID: -998708281366058015, guid: 345becfeed7a03d42ba8e56107dac0e2, type: 3}
-      propertyPath: attackRate
-      value: 4
-      objectReference: {fileID: 0}
     - target: {fileID: -624445681260028960, guid: 345becfeed7a03d42ba8e56107dac0e2, type: 3}
       propertyPath: slider
       value: 
       objectReference: {fileID: 1821515206}
     - target: {fileID: 3153496238293602224, guid: 345becfeed7a03d42ba8e56107dac0e2, type: 3}
-      propertyPath: maxJump
-      value: 0.4
-      objectReference: {fileID: 0}
-    - target: {fileID: 3153496238293602224, guid: 345becfeed7a03d42ba8e56107dac0e2, type: 3}
       propertyPath: healthBar
       value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 3153496238293602224, guid: 345becfeed7a03d42ba8e56107dac0e2, type: 3}
-      propertyPath: jumpBurst
-      value: 1200
       objectReference: {fileID: 0}
     - target: {fileID: 3153496238293602224, guid: 345becfeed7a03d42ba8e56107dac0e2, type: 3}
       propertyPath: maxHealth

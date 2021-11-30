@@ -52,7 +52,7 @@ public class AudioManager : MonoBehaviour
 
             for (int i = 0; i < audioManager.sources.Length; i++)
             {
-                if (audioManager.sources[i].isPlaying && audioManager.sources[i].clip != null && audioManager.sources[i].clip.name.ToLower() == v.ToLower())
+                if (audioManager.sources[i].isPlaying && audioManager.sources[i].clip != null && audioManager.sources[i].clip.name == audioManager.clipDict[v.ToLower()].name)
                 {
                     return i;
                 }
