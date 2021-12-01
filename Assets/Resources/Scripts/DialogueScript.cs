@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
+using System;
 using UnityEngine;
 
 public class DialogueScript : MonoBehaviour
@@ -59,7 +60,7 @@ public class DialogueScript : MonoBehaviour
         width = sp.size.x;
         sp.size = new Vector2(0, 0);
         spName.color = new Color(1, 1, 1, 0);
-        script = File.ReadAllLines("Assets/Resources/script.txt");
+        script = Resources.Load<TextAsset>("script").text.Split(new string[] { "\r\n", "\r", "\n" }, StringSplitOptions.None);
         at = -1;
 
     }
@@ -178,6 +179,7 @@ public class DialogueScript : MonoBehaviour
         bool finished = false;
         while (toRead.Length >= 5 && !finished)
         {
+            Debug.Log(toRead);
             switch (toRead.Substring(0, 5))
             {
                 case "ENDS:":
@@ -255,7 +257,7 @@ public class DialogueScript : MonoBehaviour
                         song.Stop();
                     break;
                 case "WAIT:":
-                    waitTime = (int) float.Parse(toRead.Substring(5)) * 60;
+                    waitTime = (int) (float.Parse(toRead.Substring(5)) * 60);
                     at++;
                     toRead = script[at];
                     finished = true;

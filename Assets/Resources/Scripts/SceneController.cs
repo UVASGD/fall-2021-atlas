@@ -16,7 +16,7 @@ public class SceneController: MonoBehaviour
         {"Credits", "Credits" },
         {"Level1", "Level 1 for real 1"} ,
         {"Level2", "Level 2 Fofo (Level Design Done)" } ,
-        {"Level3", "Ian Testing" }
+        {"Level3", "Level 3 Fofo (Needs playtesting) 1" }
     };
 
     public void Start()
