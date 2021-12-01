@@ -85,13 +85,8 @@ public class AppManager : MonoBehaviour
         }
         //sprite.color = new Color(0, 0, 0, shift / shiftTime);
 
-        // Loading and quitting buttons
-        if (Input.GetKeyDown(KeyCode.R))
-        {
-            ReloadScene();
-        }
-
-        if (Input.GetKeyDown(KeyCode.Escape))
+        // Quitting buttons
+        if (Input.GetKey(KeyCode.Escape))
         {
             Application.Quit();
         }
