@@ -1478,6 +1478,8 @@ MonoBehaviour:
     name: ButtonUp
   - clip: {fileID: 8300000, guid: 429a3ee1f34f07248b5ae81a98ff889c, type: 3}
     name: Door
+  - clip: {fileID: 8300000, guid: 8359a9222479a7f499ed0ce3bdd3de2a, type: 3}
+    name: ButtonTick
 --- !u!1 &8117592773864128394
 GameObject:
   m_ObjectHideFlags: 0
